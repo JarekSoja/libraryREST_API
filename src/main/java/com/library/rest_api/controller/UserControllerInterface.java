@@ -1,29 +1,29 @@
 package com.library.rest_api.controller;
 
 import com.library.rest_api.domain.NewUser;
-import com.library.rest_api.domain.UserDto;
+import com.library.rest_api.Dto.UserDto;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/user")
+@RequestMapping("/users")
 public interface UserControllerInterface {
 
-    @RequestMapping(method = RequestMethod.GET, value = "getAllUsers")
+    @RequestMapping(method = RequestMethod.GET)
     List<UserDto> getAllUsers();
 
-    @RequestMapping(method = RequestMethod.GET, value = "getUser")
-    UserDto getUser(@RequestParam Long userId);
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    UserDto getUser(@PathVariable ("id") Long userId);
 
-    @RequestMapping(method = RequestMethod.POST, value = "newUser")
+    @RequestMapping(method = RequestMethod.POST)
     NewUser newUser(@RequestBody UserDto userDto);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "removeUser")
-    void removeUser(@RequestParam Long userId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    void removeUser(@PathVariable ("id") Long userId);
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateUser")
-    UserDto updateUser(@RequestBody UserDto userDto);
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id{")
+    UserDto updateUser(@PathVariable("id") Long userId, @RequestBody UserDto userDto);
 
 }

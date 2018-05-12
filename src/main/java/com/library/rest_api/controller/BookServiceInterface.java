@@ -1,7 +1,7 @@
 package com.library.rest_api.controller;
 
-import com.library.rest_api.domain.BookCopyDto;
-import com.library.rest_api.domain.BookTitleDto;
+import com.library.rest_api.Dto.BookCopyDto;
+import com.library.rest_api.Dto.BookTitleDto;
 import com.library.rest_api.domain.NewBookCopy;
 import com.library.rest_api.domain.NewBookTitle;
 import org.springframework.web.bind.annotation.*;
@@ -11,43 +11,55 @@ import java.util.List;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/book")
+@RequestMapping("/books")
 public interface BookServiceInterface {
 
-    @RequestMapping(method = RequestMethod.GET, value = "getAllBookTitles")
+    @RequestMapping(method = RequestMethod.GET)
     List<BookTitleDto> getAllBookTitles();
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookTitle")
-    BookTitleDto getBookTitle(@RequestParam Long bookTitleId);
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    BookTitleDto getBookTitleDetaild(@PathVariable("id") Long bookTitleId);
 
-    @RequestMapping(method = RequestMethod.POST, value = "newBookTitle")
+    @RequestMapping(method = RequestMethod.POST)
     NewBookTitle newBookTitle(@RequestBody BookTitleDto bookTitleDto);
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "removeBookTitle")
-    void removeBookTitle(@RequestParam Long bookTitleId);
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    void removeBookTitle(@PathVariable("id") Long bookTitleId);
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateBookTitle")
-    BookTitleDto updateBookTitle (@RequestBody BookTitleDto bookTitleDto);
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    BookTitleDto updateBookTitle(@PathVariable("id") Long bookCopyId, @RequestBody BookTitleDto bookTitleDto);
 
-    @RequestMapping(method = RequestMethod.POST, value = "newBookCopy")
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    List<BookTitleDto> findBookTitles(@RequestParam(value = "author", required = false) String author,
+                                      @RequestParam(value = "title", required = false) String title);
+
+    //TODO Search all titles with available copies
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}/copies")
+    List<BookCopyDto> getAllBookCopies(@PathVariable("id") Long bookTitleId);
+
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}/copies/{copyId}")
+    BookTitleDto getBookTitleDetaild(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId);
+
+    @RequestMapping(method = RequestMethod.POST)
     NewBookCopy newBookCopy(@RequestBody BookCopyDto bookCopyDto);
 
-    @RequestMapping(method = RequestMethod.GET, value = "getAllBookCopies")
-    List<BookCopyDto> getAllBookCopies();
+    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}/copies/{copyId}")
+    void removeBookTitle(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId);
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookCopy")
-    BookCopyDto getBookCopy(@RequestParam Long bookCopyId);
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}/copies/{copyId}")
+    BookTitleDto updateBookTitle(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId);
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookCopiesByAuthor")
-    List<BookCopyDto> getBookCopiesByAuthor(@RequestParam String author);
+    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    List<BookTitleDto> findBookTitles(@PathVariable("id") Long bookTitleId,
+                                      @RequestParam(value = "year", required = false) Integer yearOfPublishing,
+                                      @RequestParam(value = "isAvailabe", required = false) boolean isAvailable);
 
-    @RequestMapping(method = RequestMethod.GET, value = "getBookCopiesByTitle")
-    List<BookCopyDto> getBookCopiesByTitle(@RequestParam String title);
+    //TODO Return total number of particular title copies divided to available and unavailable.
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "removeBookCopy")
-    void removeBookCopy(@RequestParam Long bookCopyId);
+    //TODO Return all available copies, regardless of title.
 
-    @RequestMapping(method = RequestMethod.PUT, value = "updateBookCopy")
-    BookCopyDto updateBooCopy (@RequestBody BookCopyDto bookCopyDto);
+    //TODO Return all overdue copies.
+
 
 }

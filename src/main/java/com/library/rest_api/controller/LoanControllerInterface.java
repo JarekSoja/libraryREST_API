@@ -1,18 +1,18 @@
 package com.library.rest_api.controller;
 
 import com.library.rest_api.domain.NewLoan;
-import com.library.rest_api.domain.LoanDto;
+import com.library.rest_api.Dto.LoanDto;
 import org.springframework.web.bind.annotation.*;
 
 @CrossOrigin(origins = "*")
 @RestController
-@RequestMapping("/loan")
+@RequestMapping("/loans")
 public interface LoanControllerInterface {
 
-    @RequestMapping(method = RequestMethod.POST, value = "newLoan")
+    @RequestMapping(method = RequestMethod.POST)
     NewLoan newLoan(@RequestBody LoanDto loanDto);
 
-    @RequestMapping(method = RequestMethod.PUT, value = "returnLoan")
-    LoanDto returnLoan(@RequestBody LoanDto loanDto);
+    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    LoanDto returnLoan(@PathVariable ("id") Long loanId, @RequestBody LoanDto loanDto);
 
 }
