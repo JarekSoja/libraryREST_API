@@ -37,7 +37,11 @@ class NewLoan {
 
     )
     private List<NewBookCopy> copiesLoaned;
+
+    @Column (name = "DATE_OF_LOAN")
     private LocalDate dateOfLoan;
+
+    @Column (name = "DATE_OF_RETURN")
     private LocalDate dateOfReturn;
 
 }
