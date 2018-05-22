@@ -15,7 +15,7 @@ import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "BOOK_COPIES")
-class NewBookCopy {
+public class BookCopy {
 
     @Id
     @GeneratedValue
@@ -25,11 +25,11 @@ class NewBookCopy {
 
     @ManyToOne
     @JoinColumn (name = "LOAN_COPIES")
-    private NewLoan newLoan;
+    private Loan loan;
 
     @ManyToOne
     @JoinColumn (name = "TITLE_COPIES")
-    private NewBookTitle bookTitle;
+    private BookTitle bookTitle;
 
     @Column(name = "LOAN_STATUS")
     private boolean isAvailable;

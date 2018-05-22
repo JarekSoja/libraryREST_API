@@ -16,7 +16,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "BOOK_TITLES")
-class NewBookTitle {
+public class BookTitle {
 
     @Id
     @GeneratedValue
@@ -25,13 +25,13 @@ class NewBookTitle {
     private long bookTitleId;
 
     @OneToMany(
-            targetEntity = NewBookCopy.class,
-            mappedBy = "newBookTitle",
+            targetEntity = BookCopy.class,
+            mappedBy = "bookTitle",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
 
     )
-    private List<NewBookCopy> listOfCopies;
+    private List<BookCopy> listOfCopies;
 
     @Column(name = "BOOK_TITLE")
     private String title;

@@ -1,6 +1,6 @@
 package com.library.rest_api.controller;
 
-import com.library.rest_api.domain.NewLoan;
+import com.library.rest_api.domain.Loan;
 import com.library.rest_api.dto.LoanDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 public class LoanController {
 
     @RequestMapping(method = RequestMethod.POST)
-    NewLoan newLoan(@RequestBody LoanDto loanDto) {
+    Loan loan(@RequestBody LoanDto loanDto) {
         return null;
     }
 

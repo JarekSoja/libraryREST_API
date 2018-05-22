@@ -1,9 +1,18 @@
 package com.library.rest_api.dto;
 
-public class BookCopyDto {
-    private int id;
+import com.library.rest_api.domain.BookTitle;
+import com.library.rest_api.domain.Loan;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-    public int getId() {
-        return id;
-    }
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+public class BookCopyDto {
+
+    private long bookCopyId;
+    private Loan loan;
+    private BookTitle bookTitle;
+    private boolean isAvailable;
 }

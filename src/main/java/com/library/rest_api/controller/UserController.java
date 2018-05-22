@@ -1,6 +1,6 @@
 package com.library.rest_api.controller;
 
-import com.library.rest_api.domain.NewUser;
+import com.library.rest_api.domain.User;
 import com.library.rest_api.dto.UserDto;
 import org.springframework.web.bind.annotation.*;
 
@@ -19,7 +19,7 @@ public class UserController {
     UserDto getUser(@PathVariable ("id") Long userId) { return null; }
 
     @RequestMapping(method = RequestMethod.POST)
-    NewUser newUser(@RequestBody UserDto userDto) { return null; }
+    User user(@RequestBody UserDto userDto) { return null; }
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     void removeUser(@PathVariable ("id") Long userId) {  }

@@ -16,32 +16,32 @@ import java.util.List;
 @Setter
 
 @Entity
-@Table(name = "LOANS")
-class NewLoan {
+@Table(name = "USERS")
+public class User {
 
     @Id
     @GeneratedValue
     @NotNull
-    @Column(name = "LOAN_ID", unique = true)
-    private long newLoanId;
+    @Column(name = "USER_ID", unique = true)
+    private long userId;
 
-    @ManyToOne
-    @JoinColumn (name = "LOANING_USER_ID")
-    private NewUser newUser;
+    @Column (name = "USER_FIRST_NAME")
+    private String userFirstName;
+
+    @Column (name = "USER_LAST_NAME")
+    private String userLastName;
+
+    @Column (name = "DATE_OF_ACCOUNT_CREATION")
+    private LocalDate dateOfCreation;
 
     @OneToMany(
-            targetEntity = NewBookCopy.class,
-            mappedBy = "newBookLoan",
+            targetEntity = Loan.class,
+            mappedBy = "user",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
 
     )
-    private List<NewBookCopy> copiesLoaned;
+    private List<Loan> listOfLoans;
 
-    @Column (name = "DATE_OF_LOAN")
-    private LocalDate dateOfLoan;
-
-    @Column (name = "DATE_OF_RETURN")
-    private LocalDate dateOfReturn;
 
 }
