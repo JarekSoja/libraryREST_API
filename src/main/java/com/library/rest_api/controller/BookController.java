@@ -19,7 +19,7 @@ public class BookController {
     }
 
     @RequestMapping(method = RequestMethod.GET, value = "/{id}")
-    BookTitleDto getBookTitleDetaild(@PathVariable("id") Long bookTitleId) {
+    BookTitleDto getBookTitleDetailId(@PathVariable("id") Long bookTitleId) {
         return null;
     }
 
@@ -30,7 +30,6 @@ public class BookController {
 
     @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
     void removeBookTitle(@PathVariable("id") Long bookTitleId) {
-
     }
 
     @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
