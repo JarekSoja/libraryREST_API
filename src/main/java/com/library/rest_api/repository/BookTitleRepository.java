@@ -1,6 +1,5 @@
 package com.library.rest_api.repository;
 
-import com.library.rest_api.domain.BookCopy;
 import com.library.rest_api.domain.BookTitle;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -12,14 +11,11 @@ import java.util.List;
 @Repository
 public interface BookTitleRepository extends CrudRepository<BookTitle, Long> {
 
-    void delete (Long bookTitleId);
+    void deleteById(Long bookTitleId);
 
-    List<BookTitle> findByBookTitleAuthor (String bookTitleAuthor);
+    List<BookTitle> findByAuthor(String author);
 
-    List<BookTitle> findByBookTitleTile (String bookTitleTitle);
-
-
-
+    List<BookTitle> findByTitle(String bookTitleTitle);
 
 
 }

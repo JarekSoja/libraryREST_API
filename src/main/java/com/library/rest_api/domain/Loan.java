@@ -31,7 +31,7 @@ public class Loan {
 
     @OneToMany(
             targetEntity = BookCopy.class,
-            mappedBy = "bookLoan",
+            mappedBy = "loan",
             cascade = CascadeType.ALL,
             fetch = FetchType.LAZY
 

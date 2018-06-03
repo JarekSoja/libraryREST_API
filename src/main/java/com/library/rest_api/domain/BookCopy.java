@@ -33,5 +33,7 @@ public class BookCopy {
 
     @Column(name = "LOAN_STATUS")
     private boolean isAvailable;
+
+    QBookCopy bookCopy = QBookCopy.bookCopy;
 }
 

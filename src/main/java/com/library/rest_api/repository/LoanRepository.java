@@ -9,6 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface LoanRepository extends CrudRepository<Loan, Long> {
 
-    void delete(Long loanId);
+    void deleteById(Long loanId);
 
 }

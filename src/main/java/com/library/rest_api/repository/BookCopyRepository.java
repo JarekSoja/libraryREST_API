@@ -9,5 +9,5 @@ import org.springframework.transaction.annotation.Transactional;
 @Repository
 public interface BookCopyRepository extends CrudRepository<BookCopy, Long> {
 
-    void delete (Long bookCopyId);
+    void deleteById(Long bookCopyId);
 }
