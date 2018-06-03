@@ -1,5 +1,6 @@
 package com.library.rest_api.domain;
 
+import com.querydsl.jpa.impl.JPAQuery;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,6 +43,5 @@ public class User {
 
     )
     private List<Loan> listOfLoans;
-
 
 }
