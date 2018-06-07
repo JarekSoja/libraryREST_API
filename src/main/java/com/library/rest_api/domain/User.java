@@ -1,6 +1,5 @@
 package com.library.rest_api.domain;
 
-import com.querydsl.core.annotations.Config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -11,12 +10,32 @@ import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
 
+@NamedNativeQuery(
+        name = "User.retrieveUsersWithOverdueLoans",
+        query = "SELECT * FROM USERS\n " +
+                "JOIN LOANS ON USER_ID = LOANS.LOAN_COPIES\n " +
+                "AND  LOAN.DATE_OF_RETURN < CURRENT_DATE()",
+        resultClass = User.class
+)
+
+
+@NamedQueries({
+        @NamedQuery(
+                name = "User.retrieveUsersWithOverdueLoans",
+                query = "FROM User AS user " +
+                        "JOIN Loan ON user.userId  " +
+                        "JOIN loan.dateOfReturn AS returnDate " +
+                        "WHERE returnDate < CURRENT_DATE()"),
+
+        @NamedQuery(
+                name = "User.retrieveUsersWithNameContaining",
+                query = "FROM User WHERE userLastName LIKE CONCAT('%',:GIVEN_STRING,'%')"
+        )}
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
-@Config(entityAccessors=true)
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -27,13 +46,13 @@ public class User {
     @Column(name = "USER_ID", unique = true)
     private long userId;
 
-    @Column (name = "USER_FIRST_NAME")
+    @Column(name = "USER_FIRST_NAME")
     private String userFirstName;
 
-    @Column (name = "USER_LAST_NAME")
+    @Column(name = "USER_LAST_NAME")
     private String userLastName;
 
-    @Column (name = "DATE_OF_ACCOUNT_CREATION")
+    @Column(name = "DATE_OF_ACCOUNT_CREATION")
     private LocalDate dateOfCreation;
 
     @OneToMany(

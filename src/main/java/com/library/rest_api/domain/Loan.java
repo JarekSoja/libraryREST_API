@@ -44,6 +44,4 @@ public class Loan {
     @Column (name = "DATE_OF_RETURN")
     private LocalDate dateOfReturn;
 
-    QLoan loan = QLoan.loan;
-
 }

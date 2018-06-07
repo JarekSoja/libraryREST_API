@@ -36,7 +36,12 @@ public class UserController {
     }
 
     @GetMapping(value = "/{searchedString}")
-    List<UserDto> getUsersWithGivenStringInFirstOrLastName(@PathVariable("searchedString") String searchedString) {
+    List<UserDto> retrieveUsersWithNameContaining(@PathVariable("searchedString") String searchedString) {
+        return null;
+    }
+
+    @GetMapping(value = "/overdue")
+    List<User> retrieveUsersWithOverdueLoans() {
         return null;
     }
 

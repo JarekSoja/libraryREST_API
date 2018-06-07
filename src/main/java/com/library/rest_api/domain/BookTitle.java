@@ -41,7 +41,4 @@ public class BookTitle {
 
     @Column(name = "YEAR_OF_PUBLISHING")
     private int yearOfPublishing;
-
-    QBookTitle bookTitle = QBookTitle.bookTitle;
-
 }
