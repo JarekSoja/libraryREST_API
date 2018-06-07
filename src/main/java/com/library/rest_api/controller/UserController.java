@@ -11,31 +11,31 @@ import java.util.List;
 @RestController
 public class UserController {
 
-    @RequestMapping(method = RequestMethod.GET)
+    @GetMapping
     List<UserDto> getAllUsers() {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{id}")
+    @GetMapping(value = "/{id}")
     UserDto getUser(@PathVariable("id") Long userId) {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     User user(@RequestBody UserDto userDto) {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.DELETE, value = "/{id}")
+    @DeleteMapping(value = "/{id}")
     void removeUser(@PathVariable("id") Long userId) {
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    @PutMapping(value = "/{id}")
     UserDto updateUser(@PathVariable("id") Long userId, @RequestBody UserDto userDto) {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/{searchedString}")
+    @GetMapping(value = "/{searchedString}")
     List<UserDto> getUsersWithGivenStringInFirstOrLastName(@PathVariable("searchedString") String searchedString) {
         return null;
     }

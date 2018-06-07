@@ -1,6 +1,6 @@
 package com.library.rest_api.domain;
 
-import com.querydsl.jpa.impl.JPAQuery;
+import com.querydsl.core.annotations.Config;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -16,6 +16,7 @@ import java.util.List;
 @Getter
 @Setter
 
+@Config(entityAccessors=true)
 @Entity
 @Table(name = "USERS")
 public class User {

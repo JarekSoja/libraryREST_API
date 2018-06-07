@@ -9,12 +9,12 @@ import org.springframework.web.bind.annotation.*;
 @RestController
 public class LoanController {
 
-    @RequestMapping(method = RequestMethod.POST)
+    @PostMapping
     Loan loan(@RequestBody LoanDto loanDto) {
         return null;
     }
 
-    @RequestMapping(method = RequestMethod.PUT, value = "/{id}")
+    @PutMapping(value = "/{id}")
     LoanDto returnLoan(@PathVariable ("id") Long loanId, @RequestBody LoanDto loanDto) {
         return null;
     }

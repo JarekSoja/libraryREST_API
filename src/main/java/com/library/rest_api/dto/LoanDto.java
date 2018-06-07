@@ -20,6 +20,4 @@ public class LoanDto {
     private List<BookCopy> copiesLoaned;
     private LocalDate dateOfLoan;
     private LocalDate dateOfReturn;
-
-
 }
