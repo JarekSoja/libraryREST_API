@@ -1,7 +1,9 @@
 package com.library.rest_api.controller;
 
-import com.library.rest_api.domain.User;
 import com.library.rest_api.dto.UserDto;
+import com.library.rest_api.mapper.UserMapper;
+import com.library.rest_api.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,38 +13,46 @@ import java.util.List;
 @RestController
 public class UserController {
 
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    UserMapper userMapper;
+
     @GetMapping
-    List<UserDto> getAllUsers() {
-        return null;
+    public List<UserDto> getAllUsers() {
+        return userMapper.mapToUserDtoList(userService.getAll());
     }
 
     @GetMapping(value = "/{id}")
-    UserDto getUser(@PathVariable("id") Long userId) {
-        return null;
+    public UserDto getUser(@PathVariable("id") Long userId) {
+        return userMapper.maptoUserDto(userService.getUserById(userId));
     }
 
     @PostMapping
-    User user(@RequestBody UserDto userDto) {
-        return null;
+    public void createUser(@RequestBody UserDto userDto) {
+        userService.saveUser(userMapper.maptoUser(userDto));
     }
 
     @DeleteMapping(value = "/{id}")
-    void removeUser(@PathVariable("id") Long userId) {
+    public void removeUser(@PathVariable("id") Long userId) {
+        userService.deleteUser(userId);
     }
 
     @PutMapping(value = "/{id}")
-    UserDto updateUser(@PathVariable("id") Long userId, @RequestBody UserDto userDto) {
-        return null;
+    public UserDto updateUser(@PathVariable("id") Long userId, @RequestBody UserDto userDto) {
+        return userMapper.maptoUserDto(userService.saveUser(userMapper.maptoUser(userDto)));
     }
 
     @GetMapping(value = "/{searchedString}")
-    List<UserDto> retrieveUsersWithNameContaining(@PathVariable("searchedString") String searchedString) {
-        return null;
+    public List<UserDto> retrieveUsersWithNameContaining(@PathVariable("searchedString") String searchedString) {
+        return userMapper.mapToUserDtoList(userService.getUsersWithNameContaining(searchedString));
     }
 
     @GetMapping(value = "/overdue")
-    List<User> retrieveUsersWithOverdueLoans() {
-        return null;
+    public List<UserDto> retrieveUsersWithOverdueLoans() {
+        return userMapper.mapToUserDtoList(userService.getUsersWithOverdueLoans());
     }
+
 
 }

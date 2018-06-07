@@ -1,31 +1,51 @@
 package com.library.rest_api.service;
 
-import com.library.rest_api.domain.QUser;
 import com.library.rest_api.domain.User;
-import com.querydsl.jpa.impl.JPAQuery;
-import com.querydsl.jpa.impl.JPAQueryFactory;
+import com.library.rest_api.dto.UserDto;
+import com.library.rest_api.repository.UserRepository;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import java.util.List;
 
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
+@Setter
 @Service
 public class UserService {
 
-    @PersistenceContext
-    private EntityManager entityManager;
+    @Autowired
+    UserRepository userRepository;
 
-    private JPAQueryFactory queryFactory = new JPAQueryFactory(entityManager);
-    private QUser user = QUser.user;
-    private JPAQuery<?> query = new JPAQuery<Void>(entityManager);
-
-
-    public List<User> fetchAllUsersWithGivenFirstName(String param) {
-        return queryFactory.selectFrom(user)
-                .where(user.userFirstName.eq(param))
-                .fetch();
+    public User getUserById(Long id) {
+        return userRepository.getUserByUserId(id);
     }
+
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
+    }
+
+    public List<User> getUsersWithOverdueLoans() {
+        return userRepository.retrieveUsersWithOverdueLoans();
+    }
+
+    public List<User> getUsersWithNameContaining(String name) {
+        return userRepository.retrieveUsersWithNameContaining(name);
+    }
+
+    public List<User> getAll() {
+        return userRepository.getAll();
+    }
+
+    public User saveUser(User user) {
+        return userRepository.save(user);
+    }
+
 }
 
 

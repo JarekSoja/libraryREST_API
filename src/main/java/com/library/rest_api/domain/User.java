@@ -17,20 +17,9 @@ import java.util.List;
                 "AND  LOAN.DATE_OF_RETURN < CURRENT_DATE()",
         resultClass = User.class
 )
-
-
-@NamedQueries({
-        @NamedQuery(
-                name = "User.retrieveUsersWithOverdueLoans",
-                query = "FROM User AS user " +
-                        "JOIN Loan ON user.userId  " +
-                        "JOIN loan.dateOfReturn AS returnDate " +
-                        "WHERE returnDate < CURRENT_DATE()"),
-
-        @NamedQuery(
-                name = "User.retrieveUsersWithNameContaining",
-                query = "FROM User WHERE userLastName LIKE CONCAT('%',:GIVEN_STRING,'%')"
-        )}
+@NamedQuery(
+        name = "User.retrieveUsersWithNameContaining",
+        query = "FROM User WHERE userLastName LIKE CONCAT('%',:GIVEN_STRING,'%')"
 )
 @AllArgsConstructor
 @NoArgsConstructor

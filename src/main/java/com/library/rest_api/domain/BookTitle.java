@@ -8,12 +8,16 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.List;
-
+@NamedNativeQuery(
+        name = "BookTitle.retrieveBookTitlesWithAvailableCopies",
+        query = "SELECT * FROM BOOK_TITLES ",
+        //TODO NativeQuery
+        resultClass = BookTitle.class
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
 @Entity
 @Table(name = "BOOK_TITLES")
 public class BookTitle {

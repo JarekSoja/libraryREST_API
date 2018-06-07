@@ -8,11 +8,14 @@ import lombok.Setter;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
+@NamedQuery(
+        name = "BookCopy.fetchAllAvailableCopies",
+        query = "FROM BookCopy WHERE isAvailalbe = TRUE"
+)
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
 @Entity
 @Table(name = "BOOK_COPIES")
 public class BookCopy {
@@ -24,16 +27,15 @@ public class BookCopy {
     private long bookCopyId;
 
     @ManyToOne
-    @JoinColumn (name = "LOAN_COPIES")
+    @JoinColumn(name = "LOAN_COPIES")
     private Loan loan;
 
     @ManyToOne
-    @JoinColumn (name = "TITLE_COPIES")
+    @JoinColumn(name = "TITLE_COPIES")
     private BookTitle bookTitle;
 
     @Column(name = "LOAN_STATUS")
     private boolean isAvailable;
 
-    QBookCopy bookCopy = QBookCopy.bookCopy;
 }
 

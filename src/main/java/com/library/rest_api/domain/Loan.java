@@ -9,12 +9,18 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
 import java.util.List;
+@NamedNativeQuery(
+        name = "Loan.fetchAllOverdueLoans",
+        query = "SELECT * FROM LOANS\n " +
+                "JOIN BOOK_COPIES ON LOAN_ID = LOANS.LOAN_COPIES\n " +
+                "AND  LOAN.DATE_OF_RETURN < CURRENT_DATE()",
+        resultClass = Loan.class
+)
 
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-
 @Entity
 @Table(name = "LOANS")
 public class Loan {

@@ -2,6 +2,13 @@ package com.library.rest_api.controller;
 
 import com.library.rest_api.dto.BookCopyDto;
 import com.library.rest_api.dto.BookTitleDto;
+import com.library.rest_api.mapper.BookCopyMapper;
+import com.library.rest_api.mapper.BookTitleMapper;
+import com.library.rest_api.repository.BookCopyRepository;
+import com.library.rest_api.repository.BookTitleRepository;
+import com.library.rest_api.service.BookCopyService;
+import com.library.rest_api.service.BookTitleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -12,6 +19,18 @@ import java.util.List;
 @RequestMapping("/books")
 @RestController
 public class BookController {
+
+    @Autowired
+    BookCopyMapper bookCopyMapper;
+
+    @Autowired
+    BookTitleMapper bookTitleMapper;
+
+    @Autowired
+    BookCopyService bookCopyService;
+
+    @Autowired
+    BookTitleService bookTitleService;
 
     @GetMapping
     List<BookTitleDto> getAllBookTitles() {
@@ -43,7 +62,10 @@ public class BookController {
         return null;
     }
 
-    //TODO Search all titles with available copies
+    @GetMapping(value = "/available")
+    List<BookTitleDto> retrieveBookTitlesWithAvailableCopies() {
+        return null;
+    }
 
     @GetMapping(value = "/copies")
     List<BookCopyDto> getAllBookCopies(@PathVariable("id") Long bookTitleId) {
@@ -74,15 +96,10 @@ public class BookController {
                                       @RequestParam(value = "year", required = false) Integer yearOfPublishing,
                                       @RequestParam(value = "isAvailabe", required = false) boolean isAvailable) {
         return null;
-
     }
 
-
-    //TODO Return total number of particular title copies divided to available and unavailable.
-
-    //TODO Return all available copies, regardless of title.
-
-    //TODO Return all overdue copies.
-
-
+    @GetMapping(value = "/availableCopies")
+    List<BookCopyDto> fetchAllAvailableCopies() {
+        return null;
+    }
 }
