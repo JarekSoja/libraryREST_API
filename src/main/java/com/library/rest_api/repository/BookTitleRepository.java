@@ -18,7 +18,13 @@ public interface BookTitleRepository extends CrudRepository<BookTitle, Long> {
 
     List<BookTitle> findByTitle(String bookTitleTitle);
 
+    List<BookTitle> getAll();
+
+    BookTitle findByBookTitleId(Long id);
+
     @Query
     List<BookTitle> retrieveBookTitlesWithAvailableCopies();
+
+    List<BookTitle> getAllByYearOfPublishing(int year);
 
 }

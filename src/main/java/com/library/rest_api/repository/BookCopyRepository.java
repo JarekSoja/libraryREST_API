@@ -1,6 +1,7 @@
 package com.library.rest_api.repository;
 
 import com.library.rest_api.domain.BookCopy;
+import com.library.rest_api.domain.BookTitle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -16,4 +17,9 @@ public interface BookCopyRepository extends CrudRepository<BookCopy, Long> {
 
     @Query
     List<BookCopy> fetchAllAvailableCopies();
+
+    List<BookCopy> getAllByBookTitle(Long id);
+
+    BookCopy getByBookCopyId(Long id);
+
 }

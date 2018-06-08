@@ -21,11 +21,23 @@ public class BookCopyService {
     @Autowired
     BookCopyRepository bookCopyRepository;
 
-    void deleteCopy(Long id) {
+    public void deleteCopy(Long id) {
         bookCopyRepository.deleteById(id);
     }
 
-    List<BookCopy> getAllAvailableCopies() {
+    public List<BookCopy> getAllAvailableCopies() {
         return bookCopyRepository.fetchAllAvailableCopies();
+    }
+
+    public List<BookCopy> getAllCopiesOfTitle(Long id) {
+        return bookCopyRepository.getAllByBookTitle(id);
+    }
+
+    public BookCopy getBookCopyById(Long id) {
+        return bookCopyRepository.getByBookCopyId(id);
+    }
+
+    public BookCopy saveCopy(BookCopy bookCopy) {
+        return bookCopyRepository.save(bookCopy);
     }
 }

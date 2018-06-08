@@ -1,9 +1,7 @@
 package com.library.rest_api.controller;
 
-import com.library.rest_api.domain.Loan;
 import com.library.rest_api.dto.LoanDto;
 import com.library.rest_api.mapper.LoanMapper;
-import com.library.rest_api.repository.LoanRepository;
 import com.library.rest_api.service.LoanService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -16,24 +14,24 @@ import java.util.List;
 public class LoanController {
 
     @Autowired
-    LoanService loanService;
+    public LoanService loanService;
 
     @Autowired
-    LoanMapper loanMapper;
+    public LoanMapper loanMapper;
 
     @PostMapping
-    Loan loan(@RequestBody LoanDto loanDto) {
-        return null;
+    public void crateLoan(@RequestBody LoanDto loanDto) {
+        loanService.saveLoan(loanMapper.mapToLoan(loanDto));
     }
 
-    @PutMapping(value = "/{id}")
-    LoanDto returnLoan(@PathVariable ("id") Long loanId, @RequestBody LoanDto loanDto) {
-        return null;
+    @PutMapping
+    public LoanDto returnLoan(@RequestBody LoanDto loanDto) {
+        return loanMapper.mapToLoanDto(loanService.saveLoan(loanMapper.mapToLoan(loanDto)));
     }
 
     @GetMapping
-    List<LoanDto> fetchAllOverdueLoans() {
-        return null;
+    public List<LoanDto> fetchAllOverdueLoans() {
+        return loanMapper.mapToLoanDtoList(loanService.getAllOverdueLoans());
     }
 
 }

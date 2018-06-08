@@ -19,14 +19,18 @@ import java.util.List;
 public class LoanService {
 
     @Autowired
-    LoanRepository loanRepository;
+    public LoanRepository loanRepository;
 
 
-    void deleteLoan(Long id) {
+    public void deleteLoan(Long id) {
         loanRepository.deleteById(id);
     }
 
-    List<Loan> getAllOverdueLoans() {
+    public List<Loan> getAllOverdueLoans() {
        return loanRepository.fetchAllOverdueLoans ();
+    }
+
+    public Loan saveLoan(Loan loan) {
+        return loanRepository.save(loan);
     }
 }

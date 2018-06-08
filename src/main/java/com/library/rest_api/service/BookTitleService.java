@@ -21,20 +21,36 @@ public class BookTitleService {
     @Autowired
     BookTitleRepository bookTitleRepository;
 
-    void deleteBooktitle(Long id) {
+    public List<BookTitle> getAllBookTitles() {
+        return bookTitleRepository.getAll();
+    }
+
+    public void deleteBooktitle(Long id) {
         bookTitleRepository.deleteById(id);
     }
 
-    List<BookTitle> getBookTitleWithAuthor(String author) {
+    public List<BookTitle> getBookTitleWithAuthor(String author) {
         return bookTitleRepository.findByAuthor(author);
     }
 
-    List<BookTitle> getBookTitleWithTitle(String title) {
+    public List<BookTitle> getBookTitleWithTitle(String title) {
         return bookTitleRepository.findByTitle(title);
     }
 
-    List<BookTitle> getAllTitlesWithAvailableCopies() {
-     return bookTitleRepository.retrieveBookTitlesWithAvailableCopies();
+    public List<BookTitle> getAllTitlesWithAvailableCopies() {
+        return bookTitleRepository.retrieveBookTitlesWithAvailableCopies();
+    }
+
+    public BookTitle getBookTitleById(Long id) {
+        return bookTitleRepository.findByBookTitleId(id);
+    }
+
+    public BookTitle saveBookTitle(BookTitle bookTitle) {
+        return bookTitleRepository.save(bookTitle);
+    }
+
+    public List<BookTitle> getAllTitlesWithGivenPublishingYear(int year) {
+        return bookTitleRepository.getAllByYearOfPublishing(year);
     }
 
 }

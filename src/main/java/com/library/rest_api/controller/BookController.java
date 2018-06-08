@@ -4,8 +4,6 @@ import com.library.rest_api.dto.BookCopyDto;
 import com.library.rest_api.dto.BookTitleDto;
 import com.library.rest_api.mapper.BookCopyMapper;
 import com.library.rest_api.mapper.BookTitleMapper;
-import com.library.rest_api.repository.BookCopyRepository;
-import com.library.rest_api.repository.BookTitleRepository;
 import com.library.rest_api.service.BookCopyService;
 import com.library.rest_api.service.BookTitleService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,85 +19,96 @@ import java.util.List;
 public class BookController {
 
     @Autowired
-    BookCopyMapper bookCopyMapper;
+    public BookCopyMapper bookCopyMapper;
 
     @Autowired
-    BookTitleMapper bookTitleMapper;
+    public BookTitleMapper bookTitleMapper;
 
     @Autowired
-    BookCopyService bookCopyService;
+    public BookCopyService bookCopyService;
 
     @Autowired
-    BookTitleService bookTitleService;
+    public BookTitleService bookTitleService;
 
     @GetMapping
-    List<BookTitleDto> getAllBookTitles() {
-        return new ArrayList<>();
+    public List<BookTitleDto> getAllBookTitles() {
+        return bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getAllBookTitles());
     }
 
     @GetMapping(value = "/{id}")
-    BookTitleDto getBookTitleDetailId(@PathVariable("id") Long bookTitleId) {
-        return null;
+    public BookTitleDto getBookTitleDetailId(@PathVariable("id") Long bookTitleId) {
+        return bookTitleMapper.mapToBookTitleDto(bookTitleService.getBookTitleById(bookTitleId));
     }
 
     @PostMapping
-    BookTitleDto newBookTitle(@RequestBody BookTitleDto bookTitleDto) {
-        return null;
+    public void createBookTitle(@RequestBody BookTitleDto bookTitleDto) {
+        bookTitleService.saveBookTitle(bookTitleMapper.mapToBookTitle(bookTitleDto));
     }
 
     @DeleteMapping(value = "/{id}")
-    void removeBookTitle(@PathVariable("id") Long bookTitleId) {
+    public void removeBookTitle(@PathVariable("id") Long bookTitleId) {
+        bookTitleService.deleteBooktitle(bookTitleId);
     }
 
     @PutMapping(value = "/{id}")
-    BookTitleDto updateBookTitle(@PathVariable("id") Long bookCopyId, @RequestBody BookTitleDto bookTitleDto) {
-        return null;
+    public BookTitleDto updateBookTitle(@PathVariable("id") Long bookCopyId, @RequestBody BookTitleDto bookTitleDto) {
+        return bookTitleMapper.mapToBookTitleDto(bookTitleService.saveBookTitle(bookTitleMapper.mapToBookTitle(bookTitleDto)));
     }
 
     @GetMapping(value = "/search")
-    List<BookTitleDto> findBookTitles(@RequestParam(value = "author", required = false) String author,
-                                      @RequestParam(value = "title", required = false) String title) {
-        return null;
+    public List<BookTitleDto> findBookTitles(@RequestParam(value = "author", required = false) String author,
+                                             @RequestParam(value = "title", required = false) String title) {
+        List<BookTitleDto> result = new ArrayList<>();
+        if (author.equals(null) && title.equals(null)) {
+            return result;
+        } else if (!author.equals(null)) {
+            result.addAll(bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getBookTitleWithAuthor(author)));
+            if (!title.equals(null)) {
+                result.addAll(bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getBookTitleWithTitle(title)));
+            }
+        }
+        return result;
     }
 
     @GetMapping(value = "/available")
-    List<BookTitleDto> retrieveBookTitlesWithAvailableCopies() {
-        return null;
-    }
-
-    @GetMapping(value = "/copies")
-    List<BookCopyDto> getAllBookCopies(@PathVariable("id") Long bookTitleId) {
-        return null;
+    public List<BookTitleDto> retrieveBookTitlesWithAvailableCopies() {
+        return bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getAllTitlesWithAvailableCopies());
     }
 
     @GetMapping(value = "/{id}/copies/{copyId}")
-    BookTitleDto getBookTitleDetaild(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId) {
-        return null;
+    public BookCopyDto getBookCopyDetailId(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId) {
+        return bookCopyMapper.mapToBookCopyDto(bookCopyService.getBookCopyById(bookCopyId));
+    }
+
+    @GetMapping(value = "/copies")
+    public List<BookCopyDto> getAllBookCopiesByTitle(@PathVariable("id") Long bookTitleId) {
+        return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllCopiesOfTitle(bookTitleId));
     }
 
     @PostMapping(value = "/copies")
-    BookCopyDto newBookCopy(@RequestBody BookCopyDto bookCopyDto) {
-        return null;
+    public void newBookCopy(@RequestBody BookCopyDto bookCopyDto) {
+        bookCopyService.saveCopy(bookCopyMapper.mapToBookCopy(bookCopyDto));
     }
 
     @DeleteMapping(value = "/{id}/copies/{copyId}")
-    void removeBookTitle(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId) {
+    public void removeBookTitle(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId) {
+        bookTitleService.deleteBooktitle(bookCopyId);
     }
 
     @PutMapping(value = "/{id}/copies/{copyId}")
-    BookTitleDto updateBookTitle(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId) {
-        return null;
+    public BookCopyDto updateBookCopy( @PathVariable("copyId") Long bookCopyId, @RequestBody BookCopyDto bookCopyDto) {
+        return bookCopyMapper.mapToBookCopyDto(bookCopyService.saveCopy(bookCopyMapper.mapToBookCopy(bookCopyDto)));
+
     }
 
-    @GetMapping(value = "/copies/{id}")
-    List<BookTitleDto> findBookTitles(@PathVariable("id") Long bookTitleId,
-                                      @RequestParam(value = "year", required = false) Integer yearOfPublishing,
-                                      @RequestParam(value = "isAvailabe", required = false) boolean isAvailable) {
-        return null;
+    @GetMapping(value = "/copies/year")
+    public List<BookTitleDto> findBookTitlesByYearOfPublishing(@RequestParam(value = "year") Integer year) {
+        return bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getAllTitlesWithGivenPublishingYear(year));
+
     }
 
     @GetMapping(value = "/availableCopies")
-    List<BookCopyDto> fetchAllAvailableCopies() {
-        return null;
+    public List<BookCopyDto> fetchAllAvailableCopies() {
+        return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllAvailableCopies());
     }
 }
