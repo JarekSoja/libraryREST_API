@@ -49,4 +49,9 @@ public class Loan {
 
     @Column (name = "DATE_OF_RETURN", updatable = false)
     private LocalDate dateOfReturn;
+
+    public Loan(User user, List<BookCopy> copiesLoaned) {
+        this.user = user;
+        this.copiesLoaned = copiesLoaned;
+    }
 }

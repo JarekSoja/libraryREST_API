@@ -26,7 +26,7 @@ public class LoanController {
 
     @PutMapping
     public LoanDto returnLoan(@RequestBody LoanDto loanDto) {
-        return loanMapper.mapToLoanDto(loanService.saveLoan(loanMapper.mapToLoan(loanDto)));
+        return loanMapper.mapToLoanDto(loanService.returnLoan(loanMapper.mapToLoan(loanDto)));
     }
 
     @GetMapping

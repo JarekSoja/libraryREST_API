@@ -17,4 +17,6 @@ public interface LoanRepository extends CrudRepository<Loan, Long> {
     @Query(nativeQuery = true)
     List<Loan> fetchAllOverdueLoans();
 
+    @Override
+    List<Loan> findAll();
 }

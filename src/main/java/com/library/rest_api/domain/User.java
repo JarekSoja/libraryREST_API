@@ -9,6 +9,7 @@ import org.hibernate.annotations.CreationTimestamp;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 @NamedNativeQuery(
@@ -55,4 +56,9 @@ public class User {
     )
     private List<Loan> listOfLoans;
 
+    public User(String userFirstName, String userLastName) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.listOfLoans = new ArrayList<>();
+    }
 }

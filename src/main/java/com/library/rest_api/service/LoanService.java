@@ -1,5 +1,6 @@
 package com.library.rest_api.service;
 
+import com.library.rest_api.domain.BookCopy;
 import com.library.rest_api.domain.Loan;
 import com.library.rest_api.repository.LoanRepository;
 import lombok.AllArgsConstructor;
@@ -21,7 +22,6 @@ public class LoanService {
     @Autowired
     public LoanRepository loanRepository;
 
-
     public void deleteLoan(Long id) {
         loanRepository.deleteById(id);
     }
@@ -30,7 +30,18 @@ public class LoanService {
        return loanRepository.fetchAllOverdueLoans ();
     }
 
+    public Loan returnLoan(Loan loan) {
+        for (BookCopy bc : loan.getCopiesLoaned()) {
+            bc.setAvailable(true);
+        }
+        loan.getCopiesLoaned().clear();
+        return loanRepository.save(loan);
+    }
+
     public Loan saveLoan(Loan loan) {
+        for (BookCopy bc : loan.getCopiesLoaned()) {
+            bc.setAvailable(false);
+        }
         return loanRepository.save(loan);
     }
 }

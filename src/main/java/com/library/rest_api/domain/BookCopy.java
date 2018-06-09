@@ -37,5 +37,10 @@ public class BookCopy {
     @Column(name = "LOAN_STATUS")
     private boolean isAvailable;
 
+    public BookCopy (BookTitle bookTitle) {
+        this.bookTitle = bookTitle;
+        this.isAvailable = true;
+    }
+
 }
 

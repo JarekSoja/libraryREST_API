@@ -7,11 +7,11 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 @NamedNativeQuery(
         name = "BookTitle.retrieveBookTitlesWithAvailableCopies",
-        query = "SELECT * FROM BOOK_TITLES ",
-        //TODO NativeQuery
+        query = "SELECT * FROM BOOK_TITLES, BOOK_COPIES WHERE BOOK_COPIES.LOAN_STATUS = TRUE",
         resultClass = BookTitle.class
 )
 @AllArgsConstructor
@@ -45,4 +45,11 @@ public class BookTitle {
 
     @Column(name = "YEAR_OF_PUBLISHING")
     private int yearOfPublishing;
+
+    public BookTitle(String title, String author, int yearOfPublishing) {
+        this.title = title;
+        this.author = author;
+        this.yearOfPublishing = yearOfPublishing;
+        this.listOfCopies = new ArrayList<>();
+    }
 }

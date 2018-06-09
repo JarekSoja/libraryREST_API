@@ -1,5 +1,6 @@
 package com.library.rest_api.repository;
 
+import com.library.rest_api.domain.BookCopy;
 import com.library.rest_api.domain.BookTitle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
