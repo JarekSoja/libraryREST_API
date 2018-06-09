@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -41,7 +42,8 @@ public class User {
     @Column(name = "USER_LAST_NAME")
     private String userLastName;
 
-    @Column(name = "DATE_OF_ACCOUNT_CREATION")
+    @Column(name = "DATE_OF_ACCOUNT_CREATION", updatable=false)
+    @CreationTimestamp
     private LocalDate dateOfCreation;
 
     @OneToMany(

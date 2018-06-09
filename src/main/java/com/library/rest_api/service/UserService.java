@@ -39,7 +39,7 @@ public class UserService {
     }
 
     public List<User> getAll() {
-        return userRepository.getAll();
+        return userRepository.findAll();
     }
 
     public User saveUser(User user) {

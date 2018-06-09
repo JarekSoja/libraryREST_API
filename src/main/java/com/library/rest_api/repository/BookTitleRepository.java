@@ -18,7 +18,7 @@ public interface BookTitleRepository extends CrudRepository<BookTitle, Long> {
 
     List<BookTitle> findByTitle(String bookTitleTitle);
 
-    List<BookTitle> getAll();
+    List<BookTitle> findAll();
 
     BookTitle findByBookTitleId(Long id);
 

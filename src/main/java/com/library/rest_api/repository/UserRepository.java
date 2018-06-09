@@ -18,7 +18,8 @@ public interface UserRepository extends CrudRepository<User, Long> {
     @Query
     List<User> retrieveUsersWithNameContaining(String name);
 
-    List<User> getAll();
+    @Override
+    List<User> findAll();
 
     User getUserByUserId(Long userId);
 

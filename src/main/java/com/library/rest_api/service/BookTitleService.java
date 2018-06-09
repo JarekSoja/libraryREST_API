@@ -22,7 +22,7 @@ public class BookTitleService {
     BookTitleRepository bookTitleRepository;
 
     public List<BookTitle> getAllBookTitles() {
-        return bookTitleRepository.getAll();
+        return bookTitleRepository.findAll();
     }
 
     public void deleteBooktitle(Long id) {

@@ -44,7 +44,7 @@ public class UserController {
         return userMapper.maptoUserDto(userService.saveUser(userMapper.maptoUser(userDto)));
     }
 
-    @GetMapping(value = "/{searchedString}")
+    @GetMapping(value = "/search/{searchedString}")
     public List<UserDto> retrieveUsersWithNameContaining(@PathVariable("searchedString") String searchedString) {
         return userMapper.mapToUserDtoList(userService.getUsersWithNameContaining(searchedString));
     }
