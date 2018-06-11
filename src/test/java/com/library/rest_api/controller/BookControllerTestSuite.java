@@ -67,48 +67,93 @@ public class BookControllerTestSuite {
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    @Test
 //    public void test
+    //Given
+    //When
+    //Then
 //
 //    public List<BookTitleDto> getAllBookTitles() {
 //    }

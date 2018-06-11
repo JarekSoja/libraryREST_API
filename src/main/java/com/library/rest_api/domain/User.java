@@ -14,9 +14,8 @@ import java.util.List;
 
 @NamedNativeQuery(
         name = "User.retrieveUsersWithOverdueLoans",
-        query = "SELECT * FROM USERS\n " +
-                "JOIN LOANS ON USER_ID = LOANS.LOAN_COPIES\n " +
-                "AND  LOAN.DATE_OF_RETURN < CURRENT_DATE()",
+        query = "SELECT USER_ID FROM USERS, LOANS " +
+                "WHERE LOANS.DATE_OF_RETURN < CURRENT_DATE()",
         resultClass = User.class
 )
 @NamedQuery(

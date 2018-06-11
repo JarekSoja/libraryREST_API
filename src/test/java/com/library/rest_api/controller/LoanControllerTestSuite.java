@@ -51,7 +51,7 @@ public class LoanControllerTestSuite {
         booksLoaned.add(bookCopy1);
         booksLoaned.add(bookCopy2);
         //When
-        Loan loan = new Loan(user1, booksLoaned);
+        Loan loan = new Loan(userRepository.getUserByUserId(1L), booksLoaned);
         loanRepository.save(loan);
         int numberOfLoansInDatabase = loanRepository.findAll().size();
         //Then
@@ -81,7 +81,7 @@ public class LoanControllerTestSuite {
     }
 
     @Test
-    public void testfetchOverdueLoans() {
+    public void testFetchOverdueLoans() {
         //Given
         User user1 = new User("John", "Smith");
         userRepository.save(user1);

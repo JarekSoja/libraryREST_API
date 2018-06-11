@@ -46,6 +46,11 @@ public class UserService {
         return userRepository.save(user);
     }
 
+    public User saveUser(User user, Long userId) {
+        return userRepository.save(user);
+    }
+
+
 }
 
 
