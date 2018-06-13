@@ -9,6 +9,7 @@ import com.library.api.repository.BookTitleRepository;
 import com.library.api.repository.LoanRepository;
 import com.library.api.repository.UserRepository;
 import org.junit.Assert;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,7 @@ import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class LoanServiceTestSuite {
+
     @Autowired
     LoanRepository loanRepository;
 
@@ -35,6 +37,11 @@ public class LoanServiceTestSuite {
 
     @Autowired
     BookCopyRepository bookCopyRepository;
+
+    @Before
+    public void clearData() {
+        loanRepository.deleteAll();
+    }
 
     @Test
     public void testCreateLoan() {
@@ -75,7 +82,6 @@ public class LoanServiceTestSuite {
         //Then
         Assert.assertEquals(bookCopy1.isAvailable(), true);
         Assert.assertEquals(bookCopy2.isAvailable(), true);
-        //Cleanup
     }
 
     @Test

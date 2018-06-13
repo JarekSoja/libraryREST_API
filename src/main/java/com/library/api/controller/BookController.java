@@ -1,5 +1,6 @@
 package com.library.api.controller;
 
+import com.library.api.domain.BookTitle;
 import com.library.api.dto.BookCopyDto;
 import com.library.api.dto.BookTitleDto;
 import com.library.api.mapper.BookCopyMapper;
@@ -81,8 +82,8 @@ public class BookController {
     }
 
     @GetMapping(value = "/copies")
-    public List<BookCopyDto> getAllBookCopiesByTitle(@PathVariable("id") Long bookTitleId) {
-        return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllCopiesOfTitle(bookTitleId));
+    public List<BookCopyDto> getAllBookCopiesByTitle(@PathVariable("title") BookTitle bookTitle) {
+        return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllCopiesOfTitle(bookTitle));
     }
 
     @PostMapping(value = "/copies")
@@ -107,8 +108,8 @@ public class BookController {
 
     }
 
-    @GetMapping(value = "/availableCopies")
-    public List<BookCopyDto> fetchAllAvailableCopies() {
-        return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllAvailableCopies());
+    @GetMapping(value = "/availableCopies/{boolean}")
+    public List<BookCopyDto> getAllByAvailable(@RequestParam (value = "boolean") boolean param) {
+        return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllByAvailable(param));
     }
 }

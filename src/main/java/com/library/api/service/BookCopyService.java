@@ -1,6 +1,7 @@
 package com.library.api.service;
 
 import com.library.api.domain.BookCopy;
+import com.library.api.domain.BookTitle;
 import com.library.api.repository.BookCopyRepository;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -25,12 +26,12 @@ public class BookCopyService {
         bookCopyRepository.deleteById(id);
     }
 
-    public List<BookCopy> getAllAvailableCopies() {
-        return bookCopyRepository.fetchAllAvailableCopies();
+    public List<BookCopy> getAllByAvailable(boolean param) {
+        return bookCopyRepository.getAllByIsAvailable(param);
     }
 
-    public List<BookCopy> getAllCopiesOfTitle(Long id) {
-        return bookCopyRepository.getAllByBookTitle(id);
+    public List<BookCopy> getAllCopiesOfTitle(BookTitle bookTitle) {
+        return bookCopyRepository.getAllByBookTitle(bookTitle);
     }
 
     public BookCopy getBookCopyById(Long id) {

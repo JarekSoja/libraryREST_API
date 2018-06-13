@@ -2,23 +2,21 @@ package com.library.api.service;
 
 import com.library.api.domain.BookCopy;
 import com.library.api.domain.BookTitle;
-import com.library.api.domain.Loan;
-import com.library.api.domain.User;
 import com.library.api.repository.BookCopyRepository;
 import com.library.api.repository.BookTitleRepository;
 import com.library.api.repository.LoanRepository;
 import com.library.api.repository.UserRepository;
+import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.context.transaction.BeforeTransaction;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.*;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class BookCopyServiceTestSuite {
@@ -35,88 +33,114 @@ public class BookCopyServiceTestSuite {
     @Autowired
     BookCopyRepository bookCopyRepository;
 
+    @Autowired
+    BookCopyService bookCopyService;
+
     @Before
-    public void createTestData() {
-        User user1 = new User("John", "Smith");
-        User user2 = new User("Mark", "Woytkovitz");
-        User user3 = new User("Joanna", "Zemla");
-        User user4 = new User("Mary", "Booyko");
-        User user5 = new User("Xanadu", "Paradise");
-        BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
-        BookTitle bookTitle2 = new BookTitle("Bcauu Buooor", "Nouty", 2012);
-        BookTitle bookTitle3 = new BookTitle("Coun", "Hooppp", 1988);
-        BookTitle bookTitle4 = new BookTitle("Dumbo", "Sfsdfsd", 1934);
-        BookTitle bookTitle5 = new BookTitle("Edvard IV", "BBBBb", 1966);
-        BookTitle bookTitle6 = new BookTitle("Father John", "Geaaaaa", 1981);
-        BookCopy bookCopy1 = new BookCopy(bookTitle1);
-        BookCopy bookCopy2 = new BookCopy(bookTitle1);
-        BookCopy bookCopy3 = new BookCopy(bookTitle2);
-        BookCopy bookCopy4 = new BookCopy(bookTitle2);
-        BookCopy bookCopy5 = new BookCopy(bookTitle3);
-        BookCopy bookCopy6 = new BookCopy(bookTitle3);
-        BookCopy bookCopy7 = new BookCopy(bookTitle4);
-        BookCopy bookCopy8 = new BookCopy(bookTitle4);
-        BookCopy bookCopy9 = new BookCopy(bookTitle4);
-        BookCopy bookCopy10 = new BookCopy(bookTitle5);
-        BookCopy bookCopy11 = new BookCopy(bookTitle5);
-        BookCopy bookCopy12 = new BookCopy(bookTitle6);
-        List<BookCopy> booksLoaned = new ArrayList<>();
-        booksLoaned.add(bookCopy1);
-        booksLoaned.add(bookCopy2);
-        Loan loan1 = new Loan(user1, booksLoaned);
+    public void clearData() {
+        bookTitleRepository.deleteAll();
+        bookCopyRepository.deleteAll();
     }
+
 
     @Test
     public void testGetBookCopyDetailId() {
         //Given
+        BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
+        bookTitleRepository.save(bookTitle1);
+        BookCopy bookCopy1 = new BookCopy(bookTitle1);
+        bookCopyRepository.save(bookCopy1);
         //When
+        long testId = bookCopy1.getBookCopyId();
+        BookCopy testedCopy = bookCopyRepository.getByBookCopyId(testId);
+        String testedTitle = testedCopy.getBookTitle().getTitle();
         //Then
+        Assert.assertEquals(testedTitle, "Ababav Bababav");
     }
 
-//    @Test
-//    public void test
-    //Given
-    //When
-    //Then
+    @Test
+    public void testGetAllBookCopiesByTitle() {
+        //Given
+        BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
+        bookTitleRepository.save(bookTitle1);
+        BookTitle bookTitle2 = new BookTitle("Bcauu Buooor", "Nouty", 2012);
+        bookTitleRepository.save(bookTitle2);
+        BookTitle bookTitle3 = new BookTitle("Coun", "Hooppp", 1988);
+        bookTitleRepository.save(bookTitle3);
+        BookCopy bookCopy1 = new BookCopy(bookTitle1);
+        bookCopyRepository.save(bookCopy1);
+        BookCopy bookCopy2 = new BookCopy(bookTitle1);
+        bookCopyRepository.save(bookCopy2);
+        BookCopy bookCopy3 = new BookCopy(bookTitle2);
+        bookCopyRepository.save(bookCopy3);
+        BookCopy bookCopy4 = new BookCopy(bookTitle2);
+        bookCopyRepository.save(bookCopy4);
+        BookCopy bookCopy5 = new BookCopy(bookTitle3);
+        bookCopyRepository.save(bookCopy5);
+        BookCopy bookCopy6 = new BookCopy(bookTitle3);
+        bookCopyRepository.save(bookCopy6);
+        //When
+        List<BookCopy> testList = bookCopyRepository.getAllByBookTitle(bookTitle1);
+        int testSize = testList.size();
+        //Then
+        Assert.assertEquals(testSize, 2);
+    }
 //
-//    @Test
-//    public void test
-    //Given
-    //When
-    //Then
-//
-//    @Test
-//    public void test
-    //Given
-    //When
-    //Then
-//
-//    @Test
-//    public void test
-    //Given
-    //When
-    //Then
-//
+    @Test
+    public void testUpdateBookCopy() {
+        //Given
+        BookTitle bookTitle6 = new BookTitle("Father John", "Geaaaaa", 1981);
+        BookTitle bookTitle5 = new BookTitle("Edvard IV", "BBBBb", 1966);
+        bookTitleRepository.save(bookTitle6);
+        bookTitleRepository.save(bookTitle5);
+        BookCopy bookCopy1 = new BookCopy(bookTitle6);
+        bookCopyRepository.save(bookCopy1);
+        //When
+        bookCopy1.setBookTitle(bookTitle5);
+        bookCopyRepository.save(bookCopy1);
+        long testId = bookCopy1.getBookCopyId();
+        String testTitle = bookCopyRepository.getByBookCopyId(testId).getBookTitle().getTitle();
+        //Then
+        Assert.assertEquals("Edvard IV", testTitle);
+    }
 
-//
-
-
-
-//    public BookCopyDto getBookCopyDetailId(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId) {
-//    }
-//
-//    public List<BookCopyDto> getAllBookCopiesByTitle(@PathVariable("id") Long bookTitleId) {
-//    }
-//
-//    public void newBookCopy(@RequestBody BookCopyDto bookCopyDto) {
-//    }
-//
-//
-//    public BookCopyDto updateBookCopy( @PathVariable("copyId") Long bookCopyId, @RequestBody BookCopyDto bookCopyDto) {
-//
-//    }
-//
-//
-//    public List<BookCopyDto> fetchAllAvailableCopies() {
-//    }
+    @Test
+    public void testFetchAllAvailableCopies() {
+        //Given
+        BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
+        bookTitleRepository.save(bookTitle1);
+        BookTitle bookTitle2 = new BookTitle("Bcauu Buooor", "Nouty", 2012);
+        bookTitleRepository.save(bookTitle2);
+        BookTitle bookTitle3 = new BookTitle("Coun", "Hooppp", 1988);
+        bookTitleRepository.save(bookTitle3);
+        BookTitle bookTitle4 = new BookTitle("Dumbo", "Sfsdfsd", 1934);
+        bookTitleRepository.save(bookTitle4);
+        BookCopy bookCopy1 = new BookCopy(bookTitle1);
+        bookCopy1.setAvailable(false);
+        bookCopyRepository.save(bookCopy1);
+        BookCopy bookCopy2 = new BookCopy(bookTitle1);
+        bookCopyRepository.save(bookCopy2);
+        BookCopy bookCopy3 = new BookCopy(bookTitle2);
+        bookCopyRepository.save(bookCopy3);
+        BookCopy bookCopy4 = new BookCopy(bookTitle2);
+        bookCopy4.setAvailable(false);
+        bookCopyRepository.save(bookCopy4);
+        BookCopy bookCopy5 = new BookCopy(bookTitle3);
+        bookCopyRepository.save(bookCopy5);
+        BookCopy bookCopy6 = new BookCopy(bookTitle3);
+        bookCopyRepository.save(bookCopy6);
+        BookCopy bookCopy7 = new BookCopy(bookTitle4);
+        bookCopyRepository.save(bookCopy7);
+        BookCopy bookCopy8 = new BookCopy(bookTitle4);
+        bookCopyRepository.save(bookCopy8);
+        BookCopy bookCopy9 = new BookCopy(bookTitle4);
+        bookCopy9.setAvailable(false);
+        bookCopyRepository.save(bookCopy9);
+        //When
+        List<BookCopy> testAvailableBooks = bookCopyRepository.getAllByIsAvailable(true);
+        List<BookCopy> testAvailableBooks2 = bookCopyRepository.getAllByIsAvailable(false);
+        //Then
+        Assert.assertEquals(6, testAvailableBooks.size());
+        Assert.assertEquals(3, testAvailableBooks2.size());
+    }
 }

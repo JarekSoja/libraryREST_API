@@ -9,8 +9,8 @@ import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 
 @NamedQuery(
-        name = "BookCopy.fetchAllAvailableCopies",
-        query = "FROM BookCopy WHERE isAvailalbe = TRUE"
+        name = "BookCopy.getBookCopiesByAvailable",
+        query = "FROM BookCopy WHERE isAvailalbe = :BOOLEAN"
 )
 @AllArgsConstructor
 @NoArgsConstructor

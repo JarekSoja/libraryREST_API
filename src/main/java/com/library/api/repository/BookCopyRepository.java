@@ -1,6 +1,7 @@
 package com.library.api.repository;
 
 import com.library.api.domain.BookCopy;
+import com.library.api.domain.BookTitle;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
@@ -15,9 +16,11 @@ public interface BookCopyRepository extends CrudRepository<BookCopy, Long> {
     void deleteById(Long bookCopyId);
 
     @Query
-    List<BookCopy> fetchAllAvailableCopies();
+    List<BookCopy> getBookCopiesByAvailable();
 
-    List<BookCopy> getAllByBookTitle(Long id);
+    List<BookCopy> getAllByIsAvailable(boolean param);
+
+    List<BookCopy> getAllByBookTitle(BookTitle bookTitle);
 
     BookCopy getByBookCopyId(Long id);
 
