@@ -15,8 +15,9 @@ import java.util.List;
 @Getter
 public class LoanDto {
 
-    private long loanId;
+    private long loanId = 1;
     private User user;
+    //TODO change to UserDto
     private List<BookCopy> copiesLoaned;
     private LocalDate dateOfLoan;
     private LocalDate dateOfReturn;

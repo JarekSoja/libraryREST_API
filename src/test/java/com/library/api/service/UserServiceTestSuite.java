@@ -40,7 +40,6 @@ public class UserServiceTestSuite {
     public void testGetAllUsers() {
         //Given
         userRepository.deleteAll();
-        List<User> users = new ArrayList<>();
         User user1 = new User("John", "Smith");
         userRepository.save(user1);
         User user2 = new User("Mark", "Woytkovitz");

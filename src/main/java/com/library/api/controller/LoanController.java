@@ -1,5 +1,6 @@
 package com.library.api.controller;
 
+import com.library.api.domain.Loan;
 import com.library.api.dto.LoanDto;
 import com.library.api.mapper.LoanMapper;
 import com.library.api.service.LoanService;
@@ -13,15 +14,22 @@ import java.util.List;
 @RestController
 public class LoanController {
 
-    @Autowired
-    public LoanService loanService;
+    private final LoanService loanService;
+
+    private final LoanMapper loanMapper;
 
     @Autowired
-    public LoanMapper loanMapper;
+    public LoanController(LoanService loanService, LoanMapper loanMapper) {
+        this.loanService = loanService;
+        this.loanMapper = loanMapper;
+    }
 
-    @PostMapping
-    public void crateLoan(@RequestBody LoanDto loanDto) {
-        loanService.saveLoan(loanMapper.mapToLoan(loanDto));
+    @PostMapping (value = "/new")
+    public LoanDto crateLoan(@RequestBody LoanDto loanDto) {
+        Loan loanToSave = loanMapper.mapToLoan(loanDto);
+        Loan loanSaved = loanService.saveLoan(loanToSave);
+        LoanDto result = loanMapper.mapToLoanDto(loanSaved);
+        return result;
     }
 
     @PutMapping

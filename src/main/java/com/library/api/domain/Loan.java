@@ -1,5 +1,6 @@
 package com.library.api.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,6 +32,7 @@ public class Loan {
     private long loanId;
 
     @ManyToOne
+    @JsonIgnore
     @JoinColumn (name = "LOANING_USER_ID")
     private User user;
 

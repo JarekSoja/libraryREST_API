@@ -4,10 +4,13 @@ import com.library.api.domain.User;
 import com.library.api.dto.UserDto;
 import com.library.api.mapper.UserMapper;
 import com.library.api.service.UserService;
+import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+
+import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
 
 @CrossOrigin(origins = "*")
 @RequestMapping("/users")
@@ -17,6 +20,8 @@ public class UserController {
     private final UserService userService;
 
     private final UserMapper userMapper;
+
+
 
     @Autowired
     public UserController(UserService userService, UserMapper userMapper) {
@@ -30,13 +35,13 @@ public class UserController {
     }
 
     @GetMapping(value = "/{id}")
-    public UserDto getUser(@PathVariable("id") Long userId) {
+    public UserDto getUser(@RequestParam("id") Long userId) {
         return userMapper.maptoUserDto(userService.getUserById(userId));
     }
 
-    @PostMapping
-    public void createUser(@RequestBody UserDto userDto) {
-        userService.saveUser(userMapper.maptoUser(userDto));
+    @PostMapping(consumes = APPLICATION_JSON_VALUE)
+    public User createUser(@RequestBody UserDto userDto) {
+        return userService.saveUser(userMapper.maptoUser(userDto));
     }
 
     @DeleteMapping(value = "/{id}")
