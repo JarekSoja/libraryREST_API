@@ -14,18 +14,14 @@ import java.util.List;
 @RestController
 public class LoanController {
 
-    private final LoanService loanService;
-
-    private final LoanMapper loanMapper;
+    @Autowired
+    private LoanService loanService;
 
     @Autowired
-    public LoanController(LoanService loanService, LoanMapper loanMapper) {
-        this.loanService = loanService;
-        this.loanMapper = loanMapper;
-    }
+    private LoanMapper loanMapper;
 
-    @PostMapping (value = "/new")
-    public LoanDto crateLoan(@RequestBody LoanDto loanDto) {
+    @PostMapping
+    public LoanDto createLoan(@RequestBody LoanDto loanDto) {
         Loan loanToSave = loanMapper.mapToLoan(loanDto);
         Loan loanSaved = loanService.saveLoan(loanToSave);
         LoanDto result = loanMapper.mapToLoanDto(loanSaved);
@@ -34,12 +30,17 @@ public class LoanController {
 
     @PutMapping
     public LoanDto returnLoan(@RequestBody LoanDto loanDto) {
-        return loanMapper.mapToLoanDto(loanService.returnLoan(loanMapper.mapToLoan(loanDto)));
+        Loan loanToSave = loanMapper.mapToLoan(loanDto);
+        Loan loanReturned = loanService.returnLoan(loanToSave);
+        LoanDto result = loanMapper.mapToLoanDto(loanReturned);
+        return result;
     }
 
     @GetMapping
     public List<LoanDto> fetchAllOverdueLoans() {
-        return loanMapper.mapToLoanDtoList(loanService.getAllOverdueLoans());
+        List<Loan> overdueLoans = loanService.getAllOverdueLoans();
+        List<LoanDto> overdueLoansDto = loanMapper.mapToLoanDtoList(overdueLoans);
+        return overdueLoansDto;
     }
 
 }

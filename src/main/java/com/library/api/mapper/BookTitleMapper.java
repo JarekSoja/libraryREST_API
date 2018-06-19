@@ -37,14 +37,4 @@ public class BookTitleMapper {
                         b.getYearOfPublishing()))
                 .collect(Collectors.toList());
     }
-
-    public List<BookTitle> mapToBookTitleList(List<BookTitleDto> bookTitlesDto) {
-        return bookTitlesDto.stream()
-                .map(b -> new BookTitle(b.getBookTitleId(),
-                        b.getListOfCopies(),
-                        b.getTitle(),
-                        b.getAuthor(),
-                        b.getYearOfPublishing()))
-                .collect(Collectors.toList());
-    }
 }

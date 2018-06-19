@@ -15,10 +15,14 @@ import java.util.List;
 @Getter
 public class LoanDto {
 
-    private long loanId = 1;
-    private User user;
-    //TODO change to UserDto
-    private List<BookCopy> copiesLoaned;
+    private long loanId;
+    private UserDto userDto;
+    private List<BookCopyDto> copiesDtoLoaned;
     private LocalDate dateOfLoan;
     private LocalDate dateOfReturn;
+
+    public LoanDto(UserDto user, List<BookCopyDto> copiesLoaned) {
+        this.userDto = user;
+        this.copiesDtoLoaned = copiesLoaned;
+    }
 }

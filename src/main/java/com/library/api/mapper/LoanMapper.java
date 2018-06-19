@@ -1,5 +1,6 @@
 package com.library.api.mapper;
 
+import com.library.api.domain.BookCopy;
 import com.library.api.domain.Loan;
 import com.library.api.dto.LoanDto;
 import org.springframework.stereotype.Component;
@@ -10,41 +11,43 @@ import java.util.stream.Collectors;
 @Component
 public class LoanMapper {
 
-    public Loan mapToLoan(final LoanDto loanDto) {
+    private UserMapper userMapper;
 
+    private BookCopyMapper bookCopyMapper;
+
+    public Loan mapToLoan(final LoanDto loanDto) {
         return new Loan(loanDto.getLoanId(),
-                loanDto.getUser(),
-                loanDto.getCopiesLoaned(),
+                userMapper.maptoUser(loanDto.getUserDto()),
+                bookCopyMapper.mapToBookCopyList(loanDto.getCopiesDtoLoaned()),
                 loanDto.getDateOfLoan(),
                 loanDto.getDateOfReturn()
         );
     }
 
-    public LoanDto mapToLoanDto(final Loan loan) {
-
-        return new LoanDto(loan.getLoanId(),
-                loan.getUser(),
-                loan.getCopiesLoaned(),
+    public com.library.api.dto.LoanDto mapToLoanDto(final Loan loan) {
+        return new com.library.api.dto.LoanDto(loan.getLoanId(),
+                userMapper.maptoUserDto(loan.getUser()),
+                bookCopyMapper.mapToBookCopyDtoList(loan.getCopiesLoaned()),
                 loan.getDateOfLoan(),
                 loan.getDateOfReturn()
         );
     }
 
-    public List<Loan> mapToLoanList(final List<LoanDto> loanDtoList) {
-        return loanDtoList.stream()
-                .map(l -> new Loan(l.getLoanId(),
-                        l.getUser(),
-                        l.getCopiesLoaned(),
+    public List<com.library.api.dto.LoanDto> mapToLoanDtoList(final List<Loan> loanList) {
+        return loanList.stream()
+                .map(l -> new com.library.api.dto.LoanDto(l.getLoanId(),
+                        userMapper.maptoUserDto(l.getUser()),
+                        bookCopyMapper.mapToBookCopyDtoList(l.getCopiesLoaned()),
                         l.getDateOfLoan(),
                         l.getDateOfReturn()))
                 .collect(Collectors.toList());
     }
 
-    public List<LoanDto> mapToLoanDtoList(final List<Loan> loanList) {
+    public List<Loan> mapToLoanList(final List<LoanDto> loanList) {
         return loanList.stream()
-                .map(l -> new LoanDto(l.getLoanId(),
-                        l.getUser(),
-                        l.getCopiesLoaned(),
+                .map(l -> new Loan(l.getLoanId(),
+                        userMapper.maptoUser(l.getUserDto()),
+                        bookCopyMapper.mapToBookCopyList(l.getCopiesDtoLoaned()),
                         l.getDateOfLoan(),
                         l.getDateOfReturn()))
                 .collect(Collectors.toList());

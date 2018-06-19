@@ -29,7 +29,7 @@ public class UserDto {
     private LocalDate dateOfCreation;
 
     @JsonProperty("listOfLoans")
-    private List<Loan> listOfLoans;
+    private List<LoanDto> listOfLoans;
 
     public UserDto(String userFirstName, String userLastName) {
         this.userFirstName = userFirstName;

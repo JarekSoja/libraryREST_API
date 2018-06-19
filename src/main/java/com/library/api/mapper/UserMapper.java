@@ -10,12 +10,14 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
 
+    private LoanMapper loanMapper;
+
     public UserDto maptoUserDto(User user) {
         return new UserDto(user.getUserId(),
                 user.getUserFirstName(),
                 user.getUserLastName(),
                 user.getDateOfCreation(),
-                user.getListOfLoans()
+                loanMapper.mapToLoanDtoList(user.getListOfLoans())
         );
     }
 
@@ -24,7 +26,7 @@ public class UserMapper {
                 userDto.getUserFirstName(),
                 userDto.getUserLastName(),
                 userDto.getDateOfCreation(),
-                userDto.getListOfLoans()
+                loanMapper.mapToLoanList(userDto.getListOfLoans())
         );
     }
 
@@ -34,17 +36,7 @@ public class UserMapper {
                         u.getUserFirstName(),
                         u.getUserLastName(),
                         u.getDateOfCreation(),
-                        u.getListOfLoans()))
-                .collect(Collectors.toList());
-    }
-
-    public List<User> mapToUserList(List<UserDto> users) {
-        return users.stream()
-                .map(u -> new User(u.getUserId(),
-                        u.getUserFirstName(),
-                        u.getUserLastName(),
-                        u.getDateOfCreation(),
-                        u.getListOfLoans()))
+                        loanMapper.mapToLoanDtoList(u.getListOfLoans())))
                 .collect(Collectors.toList());
     }
 }
