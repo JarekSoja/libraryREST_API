@@ -20,13 +20,14 @@ import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
 import static org.hamcrest.core.Is.is;
-import static org.mockito.ArgumentMatchers.anyLong;
+import static org.mockito.Matchers.anyLong;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+import static org.mockito.ArgumentMatchers.any;
 
 @RunWith(SpringRunner.class)
 @AutoConfigureMockMvc
@@ -96,17 +97,17 @@ public class UserControllerTestSuite {
     @Test
     public void shouldCreateUser() throws Exception {
         User user = new User("1", "2");
-        UserDto userDto = new UserDto("1", "2");
-        when(userMapper.maptoUser(userDto)).thenReturn(user);
+        when(userMapper.maptoUser(any(UserDto.class))).thenReturn(user);
         when(userService.saveUser(user)).thenReturn(user);
 
         Gson gson = new Gson();
         String jsonContent = gson.toJson(user);
         //When&&Then
-        mockMvc.perform(post("")
+        mockMvc.perform(post("/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .characterEncoding("UTF-8")
                 .content(jsonContent))
+                .andExpect(status().isOk())
                 .andExpect(jsonPath("$.userFirstName", is("1")));
 
     }

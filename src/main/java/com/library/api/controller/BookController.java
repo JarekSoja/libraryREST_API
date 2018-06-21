@@ -33,17 +33,22 @@ public class BookController {
 
     @GetMapping
     public List<BookTitleDto> getAllBookTitles() {
-        return bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getAllBookTitles());
+        List<BookTitle> allBookTitles = bookTitleService.getAllBookTitles();
+        List<BookTitleDto> allBookTitlesDto = bookTitleMapper.mapToBookTitleDtoList(allBookTitles);
+        return allBookTitlesDto;
     }
 
     @GetMapping(value = "/{id}")
     public BookTitleDto getBookTitleDetailId(@PathVariable("id") Long bookTitleId) {
-        return bookTitleMapper.mapToBookTitleDto(bookTitleService.getBookTitleById(bookTitleId));
+        BookTitle searchedBookTitle = bookTitleService.getBookTitleById(bookTitleId);
+        BookTitleDto bookToReturn = bookTitleMapper.mapToBookTitleDto(searchedBookTitle);
+        return bookToReturn;
     }
 
     @PostMapping
-    public void createBookTitle(@RequestBody BookTitleDto bookTitleDto) {
-        bookTitleService.saveBookTitle(bookTitleMapper.mapToBookTitle(bookTitleDto));
+    public BookTitle createBookTitle(@RequestBody BookTitleDto bookTitleDto) {
+        BookTitle newTitle = bookTitleMapper.mapToBookTitle(bookTitleDto);
+        return bookTitleService.saveBookTitle(newTitle);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -53,7 +58,10 @@ public class BookController {
 
     @PutMapping(value = "/{id}")
     public BookTitleDto updateBookTitle(@PathVariable("id") Long bookCopyId, @RequestBody BookTitleDto bookTitleDto) {
-        return bookTitleMapper.mapToBookTitleDto(bookTitleService.saveBookTitle(bookTitleMapper.mapToBookTitle(bookTitleDto)));
+        BookTitle titleToUpdate = bookTitleMapper.mapToBookTitle(bookTitleDto);
+        bookTitleService.saveBookTitle(titleToUpdate);
+        BookTitleDto titleToReturn = bookTitleMapper.mapToBookTitleDto(titleToUpdate);
+        return titleToReturn;
     }
 
     @GetMapping(value = "/search")

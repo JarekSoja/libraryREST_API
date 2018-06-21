@@ -1,6 +1,5 @@
 package com.library.api.mapper;
 
-import com.library.api.domain.BookCopy;
 import com.library.api.domain.Loan;
 import com.library.api.dto.LoanDto;
 import org.springframework.stereotype.Component;

@@ -8,6 +8,7 @@ import netscape.javascript.JSObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.nio.file.attribute.UserDefinedFileAttributeView;
 import java.util.List;
 
 import static org.springframework.util.MimeTypeUtils.APPLICATION_JSON_VALUE;
@@ -31,17 +32,21 @@ public class UserController {
 
     @GetMapping
     public List<UserDto> getAllUsers() {
-        return userMapper.mapToUserDtoList(userService.getAll());
+        List<User> usersToReturn = userService.getAll();
+        return userMapper.mapToUserDtoList(usersToReturn);
     }
 
     @GetMapping(value = "/{id}")
     public UserDto getUser(@RequestParam("id") Long userId) {
-        return userMapper.maptoUserDto(userService.getUserById(userId));
+        User userToSave = userService.getUserById(userId);
+        UserDto result = userMapper.maptoUserDto(userToSave);
+        return result;
     }
 
     @PostMapping(consumes = APPLICATION_JSON_VALUE)
     public User createUser(@RequestBody UserDto userDto) {
-        return userService.saveUser(userMapper.maptoUser(userDto));
+        User newUser = userMapper.maptoUser(userDto);
+        return userService.saveUser(newUser);
     }
 
     @DeleteMapping(value = "/{id}")
@@ -58,12 +63,16 @@ public class UserController {
 
     @GetMapping(value = "/search/{searchedString}")
     public List<UserDto> retrieveUsersWithNameContaining(@PathVariable("searchedString") String searchedString) {
-        return userMapper.mapToUserDtoList(userService.getUsersWithNameContaining(searchedString));
+        List<User> searchedUsers = userService.getUsersWithNameContaining(searchedString);
+        List<UserDto> result = userMapper.mapToUserDtoList(searchedUsers);
+        return result;
     }
 
     @GetMapping(value = "/overdue")
     public List<UserDto> retrieveUsersWithOverdueLoans() {
-        return userMapper.mapToUserDtoList(userService.getUsersWithOverdueLoans());
+        List<User> searchedUsers = userService.getUsersWithOverdueLoans();
+        List<UserDto> result = userMapper.mapToUserDtoList(searchedUsers);
+        return result;
     }
 
 
