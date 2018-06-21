@@ -9,6 +9,7 @@ import com.library.api.dto.BookCopyDto;
 import com.library.api.dto.LoanDto;
 import com.library.api.dto.UserDto;
 import com.library.api.mapper.LoanMapper;
+import com.library.api.repository.BookCopyRepository;
 import com.library.api.repository.BookTitleRepository;
 import com.library.api.repository.LoanRepository;
 import com.library.api.repository.UserRepository;
@@ -53,6 +54,9 @@ public class LoanControllerTestSuite {
     private LoanRepository loanRepository;
     @MockBean
     private LoanMapper loanMapper;
+    @MockBean
+    private BookCopyRepository bookCopyRepository;
+
 
     @Test
     public void testCreateLoan() throws Exception {

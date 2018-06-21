@@ -3,8 +3,6 @@ package com.library.api.controller;
 import com.google.gson.Gson;
 import com.library.api.domain.BookCopy;
 import com.library.api.domain.BookTitle;
-import com.library.api.domain.Loan;
-import com.library.api.domain.User;
 import com.library.api.dto.BookCopyDto;
 import com.library.api.dto.BookTitleDto;
 import com.library.api.mapper.BookCopyMapper;
@@ -22,7 +20,6 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -30,10 +27,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.hamcrest.core.Is.is;
-import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.mock;
+import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -164,7 +158,7 @@ public class BookControllerTestSuite {
 
 
     @Test
-    public void testSearchBookTitles() throws  Exception {
+    public void testSearchBookTitles() throws Exception {
         //Given
         BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
         BookTitleDto bookTitleDto2 = new BookTitleDto("Ababav Bababav", "Ggttttt", 1999);
@@ -210,7 +204,7 @@ public class BookControllerTestSuite {
     }
 
     @Test
-    public void testGetBookCopyById() throws  Exception {
+    public void testGetBookCopyById() throws Exception {
         //Given
         BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
         BookTitleDto bookTitleDto1 = new BookTitleDto("Ababav Bababav", "Ggttttt", 1999);
@@ -221,39 +215,115 @@ public class BookControllerTestSuite {
 
         when(bookCopyService.getBookCopyById(anyLong())).thenReturn(bookCopy1);
         when(bookCopyMapper.mapToBookCopyDto(any(BookCopy.class))).thenReturn(bookCopyDto2);
+        when(bookTitleMapper.mapToBookTitleDto(any(BookTitle.class))).thenReturn(bookTitleDto1);
+        when(bookTitleMapper.mapToBookTitle(any(BookTitleDto.class))).thenReturn(bookTitle1);
 
         //When&&Then
-        mockMvc.perform(get("/books/copies/333")
+        mockMvc.perform(get("/books/copies/id/444")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$.bookTitleDto.title", is("Ababav Bababav")));
     }
 
     @Test
-    public void testGetAllCopiesByTitle() throws Exception {
+    public void testNewBookCopy() throws Exception {
         //Given
         BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
         BookTitleDto bookTitleDto1 = new BookTitleDto("Ababav Bababav", "Ggttttt", 1999);
         BookCopy bookCopy1 = new BookCopy(bookTitle1);
         BookCopyDto bookCopyDto2 = new BookCopyDto(bookTitleDto1);
-        List<BookCopyDto> bookCopyDtoList = new ArrayList<>();
-        bookCopyDtoList.add(bookCopyDto2);
-        List<BookCopy> bookCopyList = new ArrayList<>();
-        bookCopyList.add(bookCopy1);
-
-        when(bookCopyService.getAllCopiesOfTitle(any(BookTitle.class))).thenReturn(bookCopyList);
-        when(bookCopyMapper.mapToBookCopyDtoList(any(List.class))).thenReturn(bookCopyDtoList);
+        when(bookCopyMapper.mapToBookCopy(any(BookCopyDto.class))).thenReturn(bookCopy1);
+        when(bookCopyService.saveCopy(any(BookCopy.class))).thenReturn(bookCopy1);
 
         Gson gson = new Gson();
-        String jsonContent = gson.toJson(bookTitle1);
+        String jsonContent = gson.toJson(bookCopyDto2);
 
-        //When&Then
-        mockMvc.perform(get("/books/copies/")
-                .param("title", jsonContent))
-             //   .contentType(MediaType.APPLICATION_JSON)
-            //    .characterEncoding("UTF-8")
-             //   .content(jsonContent))
+        //When&&Then
+        mockMvc.perform(post("/books/copies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.bookTitle.author", is("Ggttttt")));
+    }
+
+    @Test
+    public void testDeleteBookCopy() throws Exception {
+
+        //When&&Then
+        mockMvc.perform(delete("/books/copies/444"))
                 .andExpect(status().isOk());
     }
 
+    @Test
+    public void testUpdateBookCopy() throws Exception {
+        //Given
+        BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
+        BookCopy bookCopy1 = new BookCopy(bookTitle1);
+        BookTitleDto bookTitleDto2 = new BookTitleDto("Bababav Cececev", "Reee", 1999);
+        BookCopyDto bookCopyDto2 = new BookCopyDto(bookTitleDto2);
+
+        when(bookCopyService.saveCopy(any(BookCopy.class))).thenReturn(bookCopy1);
+        when(bookCopyMapper.mapToBookCopy(any(BookCopyDto.class))).thenReturn(bookCopy1);
+        when(bookCopyMapper.mapToBookCopyDto(any(BookCopy.class))).thenReturn(bookCopyDto2);
+
+        Gson gson = new Gson();
+        String jsonContent = gson.toJson(bookCopyDto2);
+
+        //When&Then
+        mockMvc.perform(put("/books/copies")
+                .contentType(MediaType.APPLICATION_JSON)
+                .characterEncoding("UTF-8")
+                .content(jsonContent))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.bookTitleDto.author", is("Reee")));
+    }
+
+    @Test
+    public void testFindBookTitlesByYearOfPublishing() throws Exception {
+        //Given
+        BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
+        BookTitleDto bookTitleDto2 = new BookTitleDto("Bababav Cececev", "Reee", 1999);
+        List<BookTitle> bookTitleList = new ArrayList<>();
+        List<BookTitleDto> bookTitleDtoList = new ArrayList<>();
+        bookTitleDtoList.add(bookTitleDto2);
+        bookTitleList.add(bookTitle1);
+
+        when(bookTitleService.getAllTitlesWithGivenPublishingYear(anyInt())).thenReturn(bookTitleList);
+        when(bookTitleMapper.mapToBookTitleDtoList(any(List.class))).thenReturn(bookTitleDtoList);
+
+        //When&Then
+
+        mockMvc.perform(get("/books/")
+                .param("year", "4444"))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.[0].title", is("Bababav Cececev")));
+    }
+
+    @Test
+    public void testGetAllAvailableCopies() throws  Exception {
+        BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
+        BookCopy bookCopy1 = new BookCopy(bookTitle1);
+        BookCopy bookCopy2 = new BookCopy(bookTitle1);
+        List<BookCopy> bookCopies = new ArrayList<>();
+        bookCopies.add(bookCopy1);
+        bookCopies.add(bookCopy2);
+        BookTitleDto bookTitleDto1 = new BookTitleDto("Ababav Bababav", "Ggttttt", 1999);
+        BookCopyDto bookCopyDto1 = new BookCopyDto(bookTitleDto1);
+        BookCopyDto bookCopyDto2 = new BookCopyDto(bookTitleDto1);
+        List<BookCopyDto> bookCopiesDto = new ArrayList<>();
+        bookCopiesDto.add(bookCopyDto1);
+        bookCopiesDto.add(bookCopyDto2);
+
+        when(bookCopyService.getAllByAvailable()).thenReturn(bookCopies);
+        when(bookCopyMapper.mapToBookCopyDtoList(any(List.class))).thenReturn(bookCopiesDto);
+
+        //When&Then
+
+        mockMvc.perform(get("/books/availableCopies/")
+                .param("boolean", "true"))
+                .andExpect(status().isOk());
+              //  .andExpect(jsonPath("$", is("2")));
+
+    }
 }

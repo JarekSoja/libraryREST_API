@@ -88,7 +88,7 @@ public class BookController {
         return bookTitleMapper.mapToBookTitleDtoList(searchedTitles);
     }
 
-    @GetMapping(value = "/copies/{copyId}")
+    @GetMapping(value = "/copies/id/{copyId}")
     public BookCopyDto getBookCopyDetailId(@PathVariable("copyId") Long bookCopyId) {
         BookCopy bookCopy = bookCopyService.getBookCopyById(bookCopyId);
         BookCopyDto bookCopyDto = bookCopyMapper.mapToBookCopyDto(bookCopy);
@@ -102,29 +102,34 @@ public class BookController {
     }
 
     @PostMapping(value = "/copies")
-    public void newBookCopy(@RequestBody BookCopyDto bookCopyDto) {
-        bookCopyService.saveCopy(bookCopyMapper.mapToBookCopy(bookCopyDto));
+    public BookCopy newBookCopy(@RequestBody BookCopyDto bookCopyDto) {
+        BookCopy bookCopy = bookCopyMapper.mapToBookCopy(bookCopyDto);
+        return bookCopyService.saveCopy(bookCopy);
     }
 
-    @DeleteMapping(value = "/{id}/copies/{copyId}")
-    public void removeBookTitle(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId) {
-        bookTitleService.deleteBooktitle(bookCopyId);
+    @DeleteMapping(value = "/copies/{copyId}")
+    public void removeBookCopy(@PathVariable("copyId") Long bookCopyId) {
+        bookCopyService.deleteCopy(bookCopyId);
     }
 
-    @PutMapping(value = "/{id}/copies/{copyId}")
-    public BookCopyDto updateBookCopy( @PathVariable("copyId") Long bookCopyId, @RequestBody BookCopyDto bookCopyDto) {
-        return bookCopyMapper.mapToBookCopyDto(bookCopyService.saveCopy(bookCopyMapper.mapToBookCopy(bookCopyDto)));
-
-    }
-
-    @GetMapping(value = "/copies/year")
-    public List<BookTitleDto> findBookTitlesByYearOfPublishing(@RequestParam(value = "year") Integer year) {
-        return bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getAllTitlesWithGivenPublishingYear(year));
+    @PutMapping(value = "/copies")
+    public BookCopyDto updateBookCopy(@RequestBody BookCopyDto bookCopyDto) {
+        BookCopy bookCopy = bookCopyMapper.mapToBookCopy(bookCopyDto);
+        bookCopyService.saveCopy(bookCopy);
+        return bookCopyMapper.mapToBookCopyDto(bookCopy);
 
     }
 
-    @GetMapping(value = "/availableCopies/{boolean}")
-    public List<BookCopyDto> getAllByAvailable(@RequestParam (value = "boolean") boolean param) {
-        return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllByAvailable(param));
+    @GetMapping(value = "/copies/{year}")
+    public List<BookTitleDto> findBookTitlesByYearOfPublishing(@PathVariable(value = "year") Integer year) {
+        List<BookTitle> foundBooks = bookTitleService.getAllTitlesWithGivenPublishingYear(year);
+        return bookTitleMapper.mapToBookTitleDtoList(foundBooks);
+
+    }
+
+    @GetMapping(value = "/availableCopies")
+    public List<BookCopyDto> getAllByAvailable() {
+        List<BookCopy> searchedBookCopies = bookCopyService.getAllByAvailable();
+        return bookCopyMapper.mapToBookCopyDtoList(searchedBookCopies);
     }
 }

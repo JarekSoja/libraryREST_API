@@ -4,6 +4,10 @@ import com.google.gson.Gson;
 import com.library.api.domain.User;
 import com.library.api.dto.UserDto;
 import com.library.api.mapper.UserMapper;
+import com.library.api.repository.BookCopyRepository;
+import com.library.api.repository.BookTitleRepository;
+import com.library.api.repository.LoanRepository;
+import com.library.api.repository.UserRepository;
 import com.library.api.service.UserService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -43,6 +47,18 @@ public class UserControllerTestSuite {
 
     @MockBean
     private UserMapper userMapper;
+
+    @MockBean
+    private BookTitleRepository bookTitleRepository;
+
+    @MockBean
+    private BookCopyRepository bookCopyRepository;
+
+    @MockBean
+    private UserRepository userRepository;
+
+    @MockBean
+    private LoanRepository loanRepository;
 
     @Test
     public void shouldFetchEmptyUserList() throws Exception {

@@ -18,7 +18,7 @@ public interface BookCopyRepository extends CrudRepository<BookCopy, Long> {
     @Query
     List<BookCopy> getBookCopiesByAvailable();
 
-    List<BookCopy> getAllByIsAvailable(boolean param);
+    List<BookCopy> getAllByIsAvailable();
 
     List<BookCopy> getAllByBookTitle(BookTitle bookTitle);
 

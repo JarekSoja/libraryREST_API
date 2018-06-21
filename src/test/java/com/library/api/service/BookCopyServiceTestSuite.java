@@ -2,6 +2,8 @@ package com.library.api.service;
 
 import com.library.api.domain.BookCopy;
 import com.library.api.domain.BookTitle;
+import com.library.api.mapper.BookCopyMapper;
+import com.library.api.mapper.BookTitleMapper;
 import com.library.api.repository.BookCopyRepository;
 import com.library.api.repository.BookTitleRepository;
 import com.library.api.repository.LoanRepository;
@@ -31,6 +33,12 @@ public class BookCopyServiceTestSuite {
 
     @Autowired
     BookCopyRepository bookCopyRepository;
+
+    @Autowired
+    BookCopyMapper bookCopyMapper;
+
+    @Autowired
+    BookTitleMapper bookTitleMapper;
 
     @Autowired
     BookCopyService bookCopyService;
@@ -136,8 +144,8 @@ public class BookCopyServiceTestSuite {
         bookCopy9.setAvailable(false);
         bookCopyRepository.save(bookCopy9);
         //When
-        List<BookCopy> testAvailableBooks = bookCopyRepository.getAllByIsAvailable(true);
-        List<BookCopy> testAvailableBooks2 = bookCopyRepository.getAllByIsAvailable(false);
+        List<BookCopy> testAvailableBooks = bookCopyRepository.getAllByIsAvailable();
+        List<BookCopy> testAvailableBooks2 = bookCopyRepository.getAllByIsAvailable();
         //Then
         Assert.assertEquals(6, testAvailableBooks.size());
         Assert.assertEquals(3, testAvailableBooks2.size());

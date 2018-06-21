@@ -26,8 +26,8 @@ public class BookCopyService {
         bookCopyRepository.deleteById(id);
     }
 
-    public List<BookCopy> getAllByAvailable(boolean param) {
-        return bookCopyRepository.getAllByIsAvailable(param);
+    public List<BookCopy> getAllByAvailable() {
+        return bookCopyRepository.getAllByIsAvailable();
     }
 
     public List<BookCopy> getAllCopiesOfTitle(BookTitle bookTitle) {
