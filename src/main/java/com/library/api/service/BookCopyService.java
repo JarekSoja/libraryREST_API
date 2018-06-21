@@ -27,7 +27,7 @@ public class BookCopyService {
     }
 
     public List<BookCopy> getAllByAvailable() {
-        return bookCopyRepository.getAllByIsAvailable();
+        return bookCopyRepository.getBookCopiesByAvailable();
     }
 
     public List<BookCopy> getAllCopiesOfTitle(BookTitle bookTitle) {

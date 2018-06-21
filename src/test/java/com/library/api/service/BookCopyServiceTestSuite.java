@@ -144,10 +144,8 @@ public class BookCopyServiceTestSuite {
         bookCopy9.setAvailable(false);
         bookCopyRepository.save(bookCopy9);
         //When
-        List<BookCopy> testAvailableBooks = bookCopyRepository.getAllByIsAvailable();
-        List<BookCopy> testAvailableBooks2 = bookCopyRepository.getAllByIsAvailable();
+        List<BookCopy> testAvailableBooks = bookCopyRepository.getBookCopiesByAvailable();
         //Then
         Assert.assertEquals(6, testAvailableBooks.size());
-        Assert.assertEquals(3, testAvailableBooks2.size());
     }
 }

@@ -10,7 +10,7 @@ import javax.validation.constraints.NotNull;
 
 @NamedQuery(
         name = "BookCopy.getBookCopiesByAvailable",
-        query = "FROM BookCopy WHERE isAvailalbe = :BOOLEAN"
+        query = "FROM BookCopy WHERE isAvailable = TRUE"
 )
 @AllArgsConstructor
 @NoArgsConstructor
