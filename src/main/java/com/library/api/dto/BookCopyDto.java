@@ -14,4 +14,8 @@ public class BookCopyDto {
     private LoanDto loanDto;
     private BookTitleDto bookTitleDto;
     private boolean isAvailable;
+
+    public BookCopyDto(BookTitleDto bookTitleDto) {
+        this.bookTitleDto = bookTitleDto;
+    }
 }

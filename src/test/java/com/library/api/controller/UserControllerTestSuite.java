@@ -96,6 +96,7 @@ public class UserControllerTestSuite {
 
     @Test
     public void shouldCreateUser() throws Exception {
+
         User user = new User("1", "2");
         when(userMapper.maptoUser(any(UserDto.class))).thenReturn(user);
         when(userService.saveUser(user)).thenReturn(user);
@@ -111,4 +112,5 @@ public class UserControllerTestSuite {
                 .andExpect(jsonPath("$.userFirstName", is("1")));
 
     }
+
 }

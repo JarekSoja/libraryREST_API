@@ -1,5 +1,6 @@
 package com.library.api.controller;
 
+import com.library.api.domain.BookCopy;
 import com.library.api.domain.BookTitle;
 import com.library.api.dto.BookCopyDto;
 import com.library.api.dto.BookTitleDto;
@@ -56,8 +57,8 @@ public class BookController {
         bookTitleService.deleteBooktitle(bookTitleId);
     }
 
-    @PutMapping(value = "/{id}")
-    public BookTitleDto updateBookTitle(@PathVariable("id") Long bookCopyId, @RequestBody BookTitleDto bookTitleDto) {
+    @PutMapping
+    public BookTitleDto updateBookTitle(@RequestBody BookTitleDto bookTitleDto) {
         BookTitle titleToUpdate = bookTitleMapper.mapToBookTitle(bookTitleDto);
         bookTitleService.saveBookTitle(titleToUpdate);
         BookTitleDto titleToReturn = bookTitleMapper.mapToBookTitleDto(titleToUpdate);
@@ -68,12 +69,14 @@ public class BookController {
     public List<BookTitleDto> findBookTitles(@RequestParam(value = "author", required = false) String author,
                                              @RequestParam(value = "title", required = false) String title) {
         List<BookTitleDto> result = new ArrayList<>();
-        if (author.equals(null) && title.equals(null)) {
+        if (author == null && title == null) {
             return result;
-        } else if (!author.equals(null)) {
-            result.addAll(bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getBookTitleWithAuthor(author)));
-            if (!title.equals(null)) {
-                result.addAll(bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getBookTitleWithTitle(title)));
+        } else if (!(author == null)) {
+            List<BookTitle> searchResultByAuthor = bookTitleService.getBookTitleWithAuthor(author);
+            result.addAll(bookTitleMapper.mapToBookTitleDtoList(searchResultByAuthor));
+            if (!(title == null)) {
+                List<BookTitle> searchResultByTitle = bookTitleService.getBookTitleWithAuthor(title);
+                result.addAll(bookTitleMapper.mapToBookTitleDtoList(searchResultByTitle));
             }
         }
         return result;
@@ -81,17 +84,21 @@ public class BookController {
 
     @GetMapping(value = "/available")
     public List<BookTitleDto> retrieveBookTitlesWithAvailableCopies() {
-        return bookTitleMapper.mapToBookTitleDtoList(bookTitleService.getAllTitlesWithAvailableCopies());
+        List<BookTitle> searchedTitles = bookTitleService.getAllTitlesWithAvailableCopies();
+        return bookTitleMapper.mapToBookTitleDtoList(searchedTitles);
     }
 
-    @GetMapping(value = "/{id}/copies/{copyId}")
-    public BookCopyDto getBookCopyDetailId(@PathVariable("id") Long bookTitleId, @PathVariable("copyId") Long bookCopyId) {
-        return bookCopyMapper.mapToBookCopyDto(bookCopyService.getBookCopyById(bookCopyId));
+    @GetMapping(value = "/copies/{copyId}")
+    public BookCopyDto getBookCopyDetailId(@PathVariable("copyId") Long bookCopyId) {
+        BookCopy bookCopy = bookCopyService.getBookCopyById(bookCopyId);
+        BookCopyDto bookCopyDto = bookCopyMapper.mapToBookCopyDto(bookCopy);
+        return bookCopyDto;
     }
 
     @GetMapping(value = "/copies")
     public List<BookCopyDto> getAllBookCopiesByTitle(@PathVariable("title") BookTitle bookTitle) {
-        return bookCopyMapper.mapToBookCopyDtoList(bookCopyService.getAllCopiesOfTitle(bookTitle));
+        List<BookCopy> searchedBookCopies = bookCopyService.getAllCopiesOfTitle(bookTitle);
+        return bookCopyMapper.mapToBookCopyDtoList(searchedBookCopies);
     }
 
     @PostMapping(value = "/copies")
