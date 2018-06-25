@@ -20,17 +20,21 @@ import java.util.List;
 @RestController
 public class BookController {
 
-    @Autowired
-    public BookCopyMapper bookCopyMapper;
+    private final BookCopyMapper bookCopyMapper;
+
+    private final BookTitleMapper bookTitleMapper;
+
+    private final BookCopyService bookCopyService;
+
+    private final BookTitleService bookTitleService;
 
     @Autowired
-    public BookTitleMapper bookTitleMapper;
-
-    @Autowired
-    public BookCopyService bookCopyService;
-
-    @Autowired
-    public BookTitleService bookTitleService;
+    public BookController(BookCopyMapper bookCopyMapper, BookTitleMapper bookTitleMapper, BookCopyService bookCopyService, BookTitleService bookTitleService) {
+        this.bookCopyMapper = bookCopyMapper;
+        this.bookTitleMapper = bookTitleMapper;
+        this.bookCopyService = bookCopyService;
+        this.bookTitleService = bookTitleService;
+    }
 
     @GetMapping
     public List<BookTitleDto> getAllBookTitles() {

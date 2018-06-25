@@ -13,6 +13,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -41,17 +42,19 @@ public class BookTitleServiceTestSuite {
     public void testGetAllBookTitles() {
         //Given
         BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
-        bookTitleRepository.save(bookTitle1);
         BookTitle bookTitle2 = new BookTitle("Bcauu Buooor", "Nouty", 2012);
-        bookTitleRepository.save(bookTitle2);
         BookTitle bookTitle3 = new BookTitle("Coun", "Hooppp", 1988);
-        bookTitleRepository.save(bookTitle3);
         BookTitle bookTitle4 = new BookTitle("Dumbo", "Sfsdfsd", 1934);
-        bookTitleRepository.save(bookTitle4);
         BookTitle bookTitle5 = new BookTitle("Edvard IV", "BBBBb", 1966);
-        bookTitleRepository.save(bookTitle5);
         BookTitle bookTitle6 = new BookTitle("Father John", "Geaaaaa", 1981);
-        bookTitleRepository.save(bookTitle6);
+        bookTitleRepository.saveAll(Arrays.asList(
+                bookTitle1,
+                bookTitle2,
+                bookTitle3,
+                bookTitle4,
+                bookTitle5,
+                bookTitle6
+        ));
         //When
         List<BookTitle> testList = bookTitleRepository.findAll();
         int testSize = testList.size();

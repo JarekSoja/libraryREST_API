@@ -54,10 +54,10 @@ public class BookControllerTestSuite {
     private LoanRepository loanRepository;
 
     @MockBean
-    BookTitleMapper bookTitleMapper;
+    private BookTitleMapper bookTitleMapper;
 
     @MockBean
-    BookCopyMapper bookCopyMapper;
+    private BookCopyMapper bookCopyMapper;
 
     @MockBean
     private BookTitleService bookTitleService;

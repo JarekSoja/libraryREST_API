@@ -1,25 +1,25 @@
 package com.library.api.service;
 
+import com.library.api.config.UserNotFoundException;
 import com.library.api.domain.User;
 import com.library.api.repository.UserRepository;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
-@AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Service
 public class UserService {
 
+    private UserRepository userRepository;
+
     @Autowired
-    UserRepository userRepository;
+    public UserService(UserRepository userRepository) {
+        this.userRepository = userRepository;
+    }
 
     public User getUserById(Long id) {
         return userRepository.getUserByUserId(id);
@@ -45,9 +45,6 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User saveUser(User user, Long userId) {
-        return userRepository.save(user);
-    }
 
     public User updateUser(User user, Long userId) {
         User actualUser = userRepository.getUserByUserId(userId);
@@ -60,8 +57,6 @@ public class UserService {
 
         }
     }
-
-
 }
 
 

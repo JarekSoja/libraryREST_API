@@ -5,6 +5,7 @@ import com.library.api.domain.BookCopy;
 import com.library.api.dto.BookCopyDto;
 import com.library.api.dto.BookTitleDto;
 import com.library.api.dto.LoanDto;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -13,9 +14,15 @@ import java.util.stream.Collectors;
 @Component
 public class BookCopyMapper {
 
-    private BookTitleMapper bookTitleMapper;
+    private final BookTitleMapper bookTitleMapper;
 
-    private LoanMapper loanMapper;
+    private final LoanMapper loanMapper;
+
+    @Autowired
+    public BookCopyMapper(BookTitleMapper bookTitleMapper, LoanMapper loanMapper) {
+        this.bookTitleMapper = bookTitleMapper;
+        this.loanMapper = loanMapper;
+    }
 
     public BookCopyDto mapToBookCopyDto(BookCopy bookCopy) {
         return new BookCopyDto(bookCopy.getBookCopyId(),

@@ -16,6 +16,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -55,15 +56,17 @@ public class UserServiceTestSuite {
         //Given
         userRepository.deleteAll();
         User user1 = new User("John", "Smith");
-        userRepository.save(user1);
         User user2 = new User("Mark", "Woytkovitz");
-        userRepository.save(user2);
         User user3 = new User("Joanna", "Zemla");
-        userRepository.save(user3);
         User user4 = new User("Mary", "Booyko");
-        userRepository.save(user4);
         User user5 = new User("Xanadu", "Paradise");
-        userRepository.save(user5);
+        userRepository.saveAll(Arrays.asList(
+                user1,
+                user2,
+                user3,
+                user4,
+                user5
+        ));
         //When
         long user1Id = user1.getUserId();
         long user5Id = user5.getUserId();
@@ -92,13 +95,15 @@ public class UserServiceTestSuite {
         //Given
         userRepository.deleteAll();
         User user1 = new User("Mark", "Woytkovitz");
-        userRepository.save(user1);
         User user2 = new User("Joanna", "Zemla");
-        userRepository.save(user2);
         User user3 = new User("Mary", "Booyko");
-        userRepository.save(user3);
         User user4 = new User("Xanadu", "Paradise");
-        userRepository.save(user4);
+        userRepository.saveAll(Arrays.asList(
+                user1,
+                user2,
+                user3,
+                user4
+        ));
         //When
         long userId = user1.getUserId();
         userRepository.deleteById(userId);
@@ -126,13 +131,15 @@ public class UserServiceTestSuite {
         //Given
         userRepository.deleteAll();
         User user1 = new User("Mark", "Woytkovitz");
-        userRepository.save(user1);
         User user2 = new User("Joanna", "Zemla");
-        userRepository.save(user2);
         User user3 = new User("Mary", "Sue");
-        userRepository.save(user3);
         User user4 = new User("Xanadu", "Paradise");
-        userRepository.save(user4);
+        userRepository.saveAll(Arrays.asList(
+                user1,
+                user2,
+                user3,
+                user4
+        ));
         //When
         List<User> result = userRepository.retrieveUsersWithNameContaining("Woytkovitz");
         int numberOfFoundUsers = result.size();
@@ -150,12 +157,18 @@ public class UserServiceTestSuite {
         users.add(new User("Mary", "Booyko"));
         users.add(new User("Xanadu", "Paradise"));
         users.forEach(userRepository::save);
+
         BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
         bookTitleRepository.save(bookTitle1);
         BookTitle bookTitle2 = new BookTitle("Bcauu Buooor", "Nouty", 2012);
         bookTitleRepository.save(bookTitle2);
         BookTitle bookTitle3 = new BookTitle("Coun", "Hooppp", 1988);
-        bookTitleRepository.save(bookTitle3);
+        bookTitleRepository.saveAll(Arrays.asList(
+                bookTitle1,
+                bookTitle2,
+                bookTitle3
+                ));
+
         BookCopy bookCopy1 = new BookCopy(bookTitle1);
         BookCopy bookCopy2 = new BookCopy(bookTitle1);
         BookCopy bookCopy3 = new BookCopy(bookTitle2);
@@ -165,20 +178,24 @@ public class UserServiceTestSuite {
         List<BookCopy> booksLoaned = new ArrayList<>();
         booksLoaned.add(bookCopy1);
         booksLoaned.add(bookCopy2);
-        Loan loan1 = new Loan(users.get(1), booksLoaned);
-        loanRepository.save(loan1);
-        List<BookCopy> booksLoaned2 = new ArrayList<>();
         booksLoaned.add(bookCopy3);
         booksLoaned.add(bookCopy4);
-        Loan loan2 = new Loan(users.get(2), booksLoaned2);
-        loanRepository.save(loan2);
-        List<BookCopy> booksLoaned3 = new ArrayList<>();
         booksLoaned.add(bookCopy5);
         booksLoaned.add(bookCopy6);
-        Loan loan3 = new Loan(users.get(3), booksLoaned3);
-        loanRepository.save(loan3);
+        booksLoaned.forEach(bookCopyRepository::save);
+
+        Loan loan1 = new Loan(users.get(1), booksLoaned.subList(0,1));
+        Loan loan2 = new Loan(users.get(2), booksLoaned.subList(2,3));
+        Loan loan3 = new Loan(users.get(3), booksLoaned.subList(4,5));
+        loanRepository.saveAll(Arrays.asList(
+                loan1,
+                loan2,
+                loan3
+        ));
+
         //When
         int usersWIthOverDueLoans = userRepository.retrieveUsersWithOverdueLoans().size();
+
         //Then
         Assert.assertEquals(0, usersWIthOverDueLoans);
     }

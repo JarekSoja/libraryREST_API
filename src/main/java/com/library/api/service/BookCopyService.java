@@ -14,13 +14,11 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Service
 public class BookCopyService {
 
     @Autowired
-    BookCopyRepository bookCopyRepository;
+    private BookCopyRepository bookCopyRepository;
 
     public void deleteCopy(Long id) {
         bookCopyRepository.deleteById(id);

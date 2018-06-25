@@ -14,8 +14,6 @@ import java.util.List;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
-@Setter
 @Service
 public class LoanService {
 

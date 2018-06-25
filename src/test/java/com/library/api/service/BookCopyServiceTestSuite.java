@@ -16,6 +16,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -23,25 +24,25 @@ import java.util.List;
 public class BookCopyServiceTestSuite {
 
     @Autowired
-    LoanRepository loanRepository;
+    private LoanRepository loanRepository;
 
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    BookTitleRepository bookTitleRepository;
+    private BookTitleRepository bookTitleRepository;
 
     @Autowired
-    BookCopyRepository bookCopyRepository;
+    private BookCopyRepository bookCopyRepository;
 
     @Autowired
-    BookCopyMapper bookCopyMapper;
+    private BookCopyMapper bookCopyMapper;
 
     @Autowired
-    BookTitleMapper bookTitleMapper;
+    private BookTitleMapper bookTitleMapper;
 
     @Autowired
-    BookCopyService bookCopyService;
+    private BookCopyService bookCopyService;
 
     @Before
     public void clearData() {
@@ -69,23 +70,26 @@ public class BookCopyServiceTestSuite {
     public void testGetAllBookCopiesByTitle() {
         //Given
         BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
-        bookTitleRepository.save(bookTitle1);
         BookTitle bookTitle2 = new BookTitle("Bcauu Buooor", "Nouty", 2012);
-        bookTitleRepository.save(bookTitle2);
         BookTitle bookTitle3 = new BookTitle("Coun", "Hooppp", 1988);
-        bookTitleRepository.save(bookTitle3);
         BookCopy bookCopy1 = new BookCopy(bookTitle1);
-        bookCopyRepository.save(bookCopy1);
         BookCopy bookCopy2 = new BookCopy(bookTitle1);
-        bookCopyRepository.save(bookCopy2);
         BookCopy bookCopy3 = new BookCopy(bookTitle2);
-        bookCopyRepository.save(bookCopy3);
         BookCopy bookCopy4 = new BookCopy(bookTitle2);
-        bookCopyRepository.save(bookCopy4);
         BookCopy bookCopy5 = new BookCopy(bookTitle3);
-        bookCopyRepository.save(bookCopy5);
         BookCopy bookCopy6 = new BookCopy(bookTitle3);
-        bookCopyRepository.save(bookCopy6);
+        bookTitleRepository.saveAll(Arrays.asList(
+                bookTitle1,
+                bookTitle2,
+                bookTitle3));
+        bookCopyRepository.saveAll(Arrays.asList(
+                bookCopy1,
+                bookCopy2,
+                bookCopy3,
+                bookCopy4,
+                bookCopy5,
+                bookCopy6
+        ));
         //When
         List<BookCopy> testList = bookCopyRepository.getAllByBookTitle(bookTitle1);
         int testSize = testList.size();
@@ -115,34 +119,38 @@ public class BookCopyServiceTestSuite {
     public void testFetchAllAvailableCopies() {
         //Given
         BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
-        bookTitleRepository.save(bookTitle1);
         BookTitle bookTitle2 = new BookTitle("Bcauu Buooor", "Nouty", 2012);
-        bookTitleRepository.save(bookTitle2);
         BookTitle bookTitle3 = new BookTitle("Coun", "Hooppp", 1988);
-        bookTitleRepository.save(bookTitle3);
         BookTitle bookTitle4 = new BookTitle("Dumbo", "Sfsdfsd", 1934);
-        bookTitleRepository.save(bookTitle4);
         BookCopy bookCopy1 = new BookCopy(bookTitle1);
         bookCopy1.setAvailable(false);
-        bookCopyRepository.save(bookCopy1);
         BookCopy bookCopy2 = new BookCopy(bookTitle1);
-        bookCopyRepository.save(bookCopy2);
         BookCopy bookCopy3 = new BookCopy(bookTitle2);
-        bookCopyRepository.save(bookCopy3);
         BookCopy bookCopy4 = new BookCopy(bookTitle2);
         bookCopy4.setAvailable(false);
-        bookCopyRepository.save(bookCopy4);
         BookCopy bookCopy5 = new BookCopy(bookTitle3);
-        bookCopyRepository.save(bookCopy5);
         BookCopy bookCopy6 = new BookCopy(bookTitle3);
-        bookCopyRepository.save(bookCopy6);
         BookCopy bookCopy7 = new BookCopy(bookTitle4);
-        bookCopyRepository.save(bookCopy7);
         BookCopy bookCopy8 = new BookCopy(bookTitle4);
-        bookCopyRepository.save(bookCopy8);
         BookCopy bookCopy9 = new BookCopy(bookTitle4);
         bookCopy9.setAvailable(false);
-        bookCopyRepository.save(bookCopy9);
+        bookTitleRepository.saveAll(Arrays.asList(
+                bookTitle1,
+                bookTitle2,
+                bookTitle3,
+                bookTitle4
+        ));
+        bookCopyRepository.saveAll(Arrays.asList(
+                bookCopy1,
+                bookCopy2,
+                bookCopy3,
+                bookCopy4,
+                bookCopy5,
+                bookCopy6,
+                bookCopy7,
+                bookCopy8,
+                bookCopy9
+        ));
         //When
         List<BookCopy> testAvailableBooks = bookCopyRepository.getBookCopiesByAvailable();
         //Then

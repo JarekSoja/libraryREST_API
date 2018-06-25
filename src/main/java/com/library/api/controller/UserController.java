@@ -22,8 +22,6 @@ public class UserController {
 
     private final UserMapper userMapper;
 
-
-
     @Autowired
     public UserController(UserService userService, UserMapper userMapper) {
         this.userService = userService;

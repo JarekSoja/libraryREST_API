@@ -14,11 +14,15 @@ import java.util.List;
 @RestController
 public class LoanController {
 
-    @Autowired
-    private LoanService loanService;
+    private final LoanService loanService;
+
+    private final LoanMapper loanMapper;
 
     @Autowired
-    private LoanMapper loanMapper;
+    public LoanController(LoanService loanService, LoanMapper loanMapper) {
+        this.loanService = loanService;
+        this.loanMapper = loanMapper;
+    }
 
     @PostMapping
     public LoanDto createLoan(@RequestBody LoanDto loanDto) {
