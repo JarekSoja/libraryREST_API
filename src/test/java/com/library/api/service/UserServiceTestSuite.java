@@ -182,7 +182,6 @@ public class UserServiceTestSuite {
         booksLoaned.add(bookCopy4);
         booksLoaned.add(bookCopy5);
         booksLoaned.add(bookCopy6);
-        booksLoaned.forEach(bookCopyRepository::save);
 
         Loan loan1 = new Loan(users.get(1), booksLoaned.subList(0,1));
         Loan loan2 = new Loan(users.get(2), booksLoaned.subList(2,3));
@@ -192,6 +191,8 @@ public class UserServiceTestSuite {
                 loan2,
                 loan3
         ));
+
+        booksLoaned.forEach(bookCopyRepository::save);
 
         //When
         int usersWIthOverDueLoans = userRepository.retrieveUsersWithOverdueLoans().size();
