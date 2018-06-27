@@ -2,7 +2,6 @@ package com.library.api.mapper;
 
 import com.library.api.domain.Loan;
 import com.library.api.dto.LoanDto;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -29,8 +28,7 @@ public class LoanMapper {
                 userMapper.maptoUserDto(loan.getUser()),
                 bookCopyMapper.mapToBookCopyDtoList(loan.getCopiesLoaned()),
                 loan.getDateOfLoan(),
-                loan.getDateOfReturn()
-        );
+                loan.getDateOfReturn());
     }
 
     public List<LoanDto> mapToLoanDtoList(final List<Loan> loanList) {

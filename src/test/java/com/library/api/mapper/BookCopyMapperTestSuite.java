@@ -32,19 +32,16 @@ public class BookCopyMapperTestSuite {
     private BookCopyRepository bookCopyRepository;
 
     @Autowired
-    private BookTitleMapper bookTitleMapper;
-
-    @Autowired
     private BookTitleRepository bookTitleRepository;
 
     @Autowired
     UserRepository userRepository;
 
-//    @Before
-//    public void clearData() {
-//        bookTitleRepository.deleteAll();
-//        bookCopyRepository.deleteAll();
-//    }
+    @Before
+    public void clearData() {
+        bookTitleRepository.deleteAll();
+        bookCopyRepository.deleteAll();
+    }
 
     @Test
     public void testMapToBookCopyDto() {
@@ -75,5 +72,43 @@ public class BookCopyMapperTestSuite {
         String testedAuthor = testBook.getBookTitle().getAuthor();
         //Then
         Assert.assertEquals( "Ggttttt", testedAuthor);
+    }
+
+    @Test
+    public void testMapToBookCopyDtoList() {
+        //Given
+        BookTitle bookTitle1 = new BookTitle("Ababav Bababav", "Ggttttt", 1999);
+        BookTitle bookTitle2 = new BookTitle("Cece keke", "AAA", 1999);
+        BookCopy bookCopy1 = new BookCopy(bookTitle1);
+        BookCopy bookCopy2 = new BookCopy(bookTitle2);
+        List<BookCopy> booksLoaned = new ArrayList<>();
+        booksLoaned.add(bookCopy1);
+        booksLoaned.add(bookCopy2);
+        //When
+        List<BookCopyDto> listDto = bookCopyMapper.mapToBookCopyDtoList(booksLoaned);
+        String testTitle = listDto.get(0).getBookTitleDto().getTitle();
+        String testAuthor = listDto.get(1).getBookTitleDto().getAuthor();
+        //Then
+        Assert.assertEquals("Ababav Bababav", testTitle);
+        Assert.assertEquals("AAA", testAuthor);
+    }
+
+    @Test
+    public void testMapToBookCopyList() {
+        //Given
+        BookTitleDto bookTitle1 = new BookTitleDto("Ababav Bababav", "Ggttttt", 1999);
+        BookTitleDto bookTitle2 = new BookTitleDto("Cece keke", "AAA", 1999);
+        BookCopyDto bookCopy1 = new BookCopyDto(bookTitle1);
+        BookCopyDto bookCopy2 = new BookCopyDto(bookTitle2);
+        List<BookCopyDto> booksLoaned = new ArrayList<>();
+        booksLoaned.add(bookCopy1);
+        booksLoaned.add(bookCopy2);
+        //When
+        List<BookCopy> list = bookCopyMapper.mapToBookCopyList(booksLoaned);
+        String testTitle = list.get(0).getBookTitle().getTitle();
+        String testAuthor = list.get(1).getBookTitle().getAuthor();
+        //Then
+        Assert.assertEquals("Ababav Bababav", testTitle);
+        Assert.assertEquals("AAA", testAuthor);
     }
 }

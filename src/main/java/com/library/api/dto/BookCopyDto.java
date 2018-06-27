@@ -1,9 +1,11 @@
 package com.library.api.dto;
 
+import com.library.api.domain.Loan;
+
 public class BookCopyDto {
 
     private long bookCopyId;
-    private LoanDto loanDto;
+    private Loan loan;
     private BookTitleDto bookTitleDto;
     private boolean isAvailable;
 
@@ -11,15 +13,15 @@ public class BookCopyDto {
         this.bookTitleDto = bookTitleDto;
     }
 
-    public BookCopyDto(long bookCopyId, LoanDto loanDto, BookTitleDto bookTitleDto, boolean isAvailable) {
+    public BookCopyDto(long bookCopyId, Loan loan, BookTitleDto bookTitleDto, boolean isAvailable) {
         this.bookCopyId = bookCopyId;
-        this.loanDto = loanDto;
+        this.loan = loan;
         this.bookTitleDto = bookTitleDto;
         this.isAvailable = isAvailable;
     }
 
-    public BookCopyDto(LoanDto loanDto, BookTitleDto bookTitleDto, boolean isAvailable) {
-        this.loanDto = loanDto;
+    public BookCopyDto(Loan loan, BookTitleDto bookTitleDto, boolean isAvailable) {
+        this.loan = loan;
         this.bookTitleDto = bookTitleDto;
         this.isAvailable = isAvailable;
     }
@@ -32,8 +34,8 @@ public class BookCopyDto {
         return bookCopyId;
     }
 
-    public LoanDto getLoanDto() {
-        return loanDto;
+    public Loan getLoan() {
+        return loan;
     }
 
     public BookTitleDto getBookTitleDto() {

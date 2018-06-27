@@ -7,7 +7,7 @@ import java.util.List;
 public class BookTitleDto {
 
     private long bookTitleId;
-    private List<BookCopyDto> listOfCopies;
+    private List<BookCopy> listOfCopies;
     private String title;
     private String author;
     private int yearOfPublishing;
@@ -18,7 +18,7 @@ public class BookTitleDto {
         this.yearOfPublishing = yearOfPublishing;
     }
 
-    public BookTitleDto(long bookTitleId, List<BookCopyDto> listOfCopies, String title, String author, int yearOfPublishing) {
+    public BookTitleDto(long bookTitleId, List<BookCopy> listOfCopies, String title, String author, int yearOfPublishing) {
         this.bookTitleId = bookTitleId;
         this.listOfCopies = listOfCopies;
         this.title = title;
@@ -40,7 +40,7 @@ public class BookTitleDto {
         return bookTitleId;
     }
 
-    public List<BookCopyDto> getListOfCopies() {
+    public List<BookCopy> getListOfCopies() {
         return listOfCopies;
     }
 
@@ -60,7 +60,7 @@ public class BookTitleDto {
         this.bookTitleId = bookTitleId;
     }
 
-    public void setListOfCopies(List<BookCopyDto> listOfCopies) {
+    public void setListOfCopies(List<BookCopy> listOfCopies) {
         this.listOfCopies = listOfCopies;
     }
 
