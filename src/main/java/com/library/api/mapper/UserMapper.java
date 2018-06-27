@@ -10,9 +10,8 @@ import java.util.stream.Collectors;
 @Component
 public class UserMapper {
 
-    private LoanMapper loanMapper;
-
     public UserDto maptoUserDto(User user) {
+        LoanMapper loanMapper = new LoanMapper();
         return new UserDto(user.getUserId(),
                 user.getUserFirstName(),
                 user.getUserLastName(),
@@ -22,6 +21,7 @@ public class UserMapper {
     }
 
     public User maptoUser(UserDto userDto) {
+        LoanMapper loanMapper = new LoanMapper();
         return new User(userDto.getUserId(),
                 userDto.getUserFirstName(),
                 userDto.getUserLastName(),
@@ -31,6 +31,7 @@ public class UserMapper {
     }
 
     public List<UserDto> mapToUserDtoList(List<User> users) {
+        LoanMapper loanMapper = new LoanMapper();
         return users.stream()
                 .map(u -> new UserDto(u.getUserId(),
                         u.getUserFirstName(),

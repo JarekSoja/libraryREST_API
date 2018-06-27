@@ -1,9 +1,5 @@
 package com.library.api.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -23,10 +19,6 @@ import java.util.Objects;
         name = "User.retrieveUsersWithNameContaining",
         query = "FROM User WHERE userLastName LIKE CONCAT ('%',:STRING,'%')"
 )
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "USERS")
 public class User {
@@ -60,6 +52,64 @@ public class User {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.listOfLoans = new ArrayList<>();
+    }
+
+    public User(String userFirstName, String userLastName, LocalDate dateOfCreation, List<Loan> listOfLoans) {
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.dateOfCreation = dateOfCreation;
+        this.listOfLoans = listOfLoans;
+    }
+
+    public User(Long userId, String userFirstName, String userLastName, LocalDate dateOfCreation, List<Loan> listOfLoans) {
+        this.userId = userId;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.dateOfCreation = dateOfCreation;
+        this.listOfLoans = listOfLoans;
+    }
+
+    public User() {
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(long userId) {
+        this.userId = userId;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public void setUserFirstName(String userFirstName) {
+        this.userFirstName = userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public void setUserLastName(String userLastName) {
+        this.userLastName = userLastName;
+    }
+
+    public LocalDate getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public void setDateOfCreation(LocalDate dateOfCreation) {
+        this.dateOfCreation = dateOfCreation;
+    }
+
+    public List<Loan> getListOfLoans() {
+        return listOfLoans;
+    }
+
+    public void setListOfLoans(List<Loan> listOfLoans) {
+        this.listOfLoans = listOfLoans;
     }
 
     @Override

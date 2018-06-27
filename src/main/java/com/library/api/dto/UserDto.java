@@ -1,19 +1,11 @@
 package com.library.api.dto;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-import com.library.api.domain.Loan;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
 public class UserDto {
 
     @JsonProperty("userId")
@@ -35,5 +27,36 @@ public class UserDto {
         this.userFirstName = userFirstName;
         this.userLastName = userLastName;
         this.listOfLoans = new ArrayList<>();
+    }
+
+    public UserDto(long userId, String userFirstName, String userLastName, LocalDate dateOfCreation, List<LoanDto> listOfLoans) {
+        this.userId = userId;
+        this.userFirstName = userFirstName;
+        this.userLastName = userLastName;
+        this.dateOfCreation = dateOfCreation;
+        this.listOfLoans = listOfLoans;
+    }
+
+    public UserDto(){
+    }
+
+    public long getUserId() {
+        return userId;
+    }
+
+    public String getUserFirstName() {
+        return userFirstName;
+    }
+
+    public String getUserLastName() {
+        return userLastName;
+    }
+
+    public LocalDate getDateOfCreation() {
+        return dateOfCreation;
+    }
+
+    public List<LoanDto> getListOfLoans() {
+        return listOfLoans;
     }
 }

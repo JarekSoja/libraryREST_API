@@ -14,17 +14,9 @@ import java.util.stream.Collectors;
 @Component
 public class BookCopyMapper {
 
-    private final BookTitleMapper bookTitleMapper;
-
-    private final LoanMapper loanMapper;
-
-    @Autowired
-    public BookCopyMapper(BookTitleMapper bookTitleMapper, LoanMapper loanMapper) {
-        this.bookTitleMapper = bookTitleMapper;
-        this.loanMapper = loanMapper;
-    }
-
     public BookCopyDto mapToBookCopyDto(BookCopy bookCopy) {
+        LoanMapper loanMapper = new LoanMapper();
+        BookTitleMapper bookTitleMapper = new BookTitleMapper();
         return new BookCopyDto(bookCopy.getBookCopyId(),
                 loanMapper.mapToLoanDto(bookCopy.getLoan()),
                 bookTitleMapper.mapToBookTitleDto(bookCopy.getBookTitle()),
@@ -33,6 +25,8 @@ public class BookCopyMapper {
     }
 
     public BookCopy mapToBookCopy(BookCopyDto bookCopyDto) {
+        LoanMapper loanMapper = new LoanMapper();
+        BookTitleMapper bookTitleMapper = new BookTitleMapper();
         return new BookCopy(bookCopyDto.getBookCopyId(),
                 loanMapper.mapToLoan(bookCopyDto.getLoanDto()),
                 bookTitleMapper.mapToBookTitle(bookCopyDto.getBookTitleDto()),
@@ -41,6 +35,8 @@ public class BookCopyMapper {
     }
 
     public List<BookCopyDto> mapToBookCopyDtoList(List<BookCopy> bookCopies) {
+        LoanMapper loanMapper = new LoanMapper();
+        BookTitleMapper bookTitleMapper = new BookTitleMapper();
         return bookCopies.stream()
                 .map(bookCopy -> new BookCopyDto(bookCopy.getBookCopyId(),
                         loanMapper.mapToLoanDto(bookCopy.getLoan()),
@@ -50,6 +46,8 @@ public class BookCopyMapper {
     }
 
     public List<BookCopy> mapToBookCopyList(List<BookCopyDto> bookCopiesDto) {
+        LoanMapper loanMapper = new LoanMapper();
+        BookTitleMapper bookTitleMapper = new BookTitleMapper();
         return bookCopiesDto.stream()
                 .map(bookCopyDto -> new BookCopy(bookCopyDto.getBookCopyId(),
                         loanMapper.mapToLoan(bookCopyDto.getLoanDto()),

@@ -2,12 +2,8 @@ package com.library.api.service;
 
 import com.library.api.domain.BookCopy;
 import com.library.api.domain.BookTitle;
-import com.library.api.mapper.BookCopyMapper;
-import com.library.api.mapper.BookTitleMapper;
 import com.library.api.repository.BookCopyRepository;
 import com.library.api.repository.BookTitleRepository;
-import com.library.api.repository.LoanRepository;
-import com.library.api.repository.UserRepository;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
@@ -24,32 +20,16 @@ import java.util.List;
 public class BookCopyServiceTestSuite {
 
     @Autowired
-    private LoanRepository loanRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
-    @Autowired
     private BookTitleRepository bookTitleRepository;
 
     @Autowired
     private BookCopyRepository bookCopyRepository;
-
-    @Autowired
-    private BookCopyMapper bookCopyMapper;
-
-    @Autowired
-    private BookTitleMapper bookTitleMapper;
-
-    @Autowired
-    private BookCopyService bookCopyService;
 
     @Before
     public void clearData() {
         bookTitleRepository.deleteAll();
         bookCopyRepository.deleteAll();
     }
-
 
     @Test
     public void testGetBookCopyDetailId() {

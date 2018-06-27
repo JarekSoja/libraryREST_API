@@ -7,10 +7,6 @@ import com.library.api.dto.BookCopyDto;
 import com.library.api.dto.BookTitleDto;
 import com.library.api.mapper.BookCopyMapper;
 import com.library.api.mapper.BookTitleMapper;
-import com.library.api.repository.BookCopyRepository;
-import com.library.api.repository.BookTitleRepository;
-import com.library.api.repository.LoanRepository;
-import com.library.api.repository.UserRepository;
 import com.library.api.service.BookCopyService;
 import com.library.api.service.BookTitleService;
 import org.junit.Test;
@@ -40,18 +36,6 @@ public class BookControllerTestSuite {
 
     @Autowired
     private MockMvc mockMvc;
-
-    @MockBean
-    private BookTitleRepository bookTitleRepository;
-
-    @MockBean
-    private BookCopyRepository bookCopyRepository;
-
-    @MockBean
-    private UserRepository userRepository;
-
-    @MockBean
-    private LoanRepository loanRepository;
 
     @MockBean
     private BookTitleMapper bookTitleMapper;

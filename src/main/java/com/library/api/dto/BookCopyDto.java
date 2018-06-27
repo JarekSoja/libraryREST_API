@@ -1,13 +1,5 @@
 package com.library.api.dto;
 
-import com.library.api.domain.Loan;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
 public class BookCopyDto {
 
     private long bookCopyId;
@@ -17,5 +9,38 @@ public class BookCopyDto {
 
     public BookCopyDto(BookTitleDto bookTitleDto) {
         this.bookTitleDto = bookTitleDto;
+    }
+
+    public BookCopyDto(long bookCopyId, LoanDto loanDto, BookTitleDto bookTitleDto, boolean isAvailable) {
+        this.bookCopyId = bookCopyId;
+        this.loanDto = loanDto;
+        this.bookTitleDto = bookTitleDto;
+        this.isAvailable = isAvailable;
+    }
+
+    public BookCopyDto(LoanDto loanDto, BookTitleDto bookTitleDto, boolean isAvailable) {
+        this.loanDto = loanDto;
+        this.bookTitleDto = bookTitleDto;
+        this.isAvailable = isAvailable;
+    }
+
+
+    public BookCopyDto(){
+    }
+
+    public long getBookCopyId() {
+        return bookCopyId;
+    }
+
+    public LoanDto getLoanDto() {
+        return loanDto;
+    }
+
+    public BookTitleDto getBookTitleDto() {
+        return bookTitleDto;
+    }
+
+    public boolean isAvailable() {
+        return isAvailable;
     }
 }

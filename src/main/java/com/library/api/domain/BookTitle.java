@@ -1,10 +1,5 @@
 package com.library.api.domain;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
-
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.util.ArrayList;
@@ -14,10 +9,6 @@ import java.util.List;
         query = "SELECT * FROM BOOK_TITLES, BOOK_COPIES WHERE BOOK_COPIES.LOAN_STATUS = TRUE",
         resultClass = BookTitle.class
 )
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "BOOK_TITLES")
 public class BookTitle {
@@ -50,6 +41,51 @@ public class BookTitle {
         this.title = title;
         this.author = author;
         this.yearOfPublishing = yearOfPublishing;
-        this.listOfCopies = new ArrayList<>();
+    }
+
+    public BookTitle(Long bookTitleId, String title, String author, int yearOfPublishing) {
+        this.bookTitleId = bookTitleId;
+        this.title = title;
+        this.author = author;
+        this.yearOfPublishing = yearOfPublishing;
+    }
+
+    public BookTitle() {
+    }
+
+    public long getBookTitleId() {
+        return bookTitleId;
+    }
+
+    public List<BookCopy> getListOfCopies() {
+        return listOfCopies;
+    }
+
+    public void setListOfCopies(List<BookCopy> listOfCopies) {
+        this.listOfCopies = listOfCopies;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public String getAuthor() {
+        return author;
+    }
+
+    public void setAuthor(String author) {
+        this.author = author;
+    }
+
+    public int getYearOfPublishing() {
+        return yearOfPublishing;
+    }
+
+    public void setYearOfPublishing(int yearOfPublishing) {
+        this.yearOfPublishing = yearOfPublishing;
     }
 }

@@ -1,10 +1,6 @@
 package com.library.api.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -17,10 +13,6 @@ import java.util.List;
         resultClass = Loan.class
 )
 
-@AllArgsConstructor
-@NoArgsConstructor
-@Getter
-@Setter
 @Entity
 @Table(name = "LOANS")
 public class Loan {
@@ -55,5 +47,52 @@ public class Loan {
     public Loan(User user, List<BookCopy> copiesLoaned) {
         this.user = user;
         this.copiesLoaned = copiesLoaned;
+    }
+
+    public Loan(long id, User user, List<BookCopy> copiesLoaned, LocalDate dateOfLoan, LocalDate dateOfReturn) {
+        this.loanId = loanId;
+        this.user = user;
+        this.copiesLoaned = copiesLoaned;
+        this.dateOfLoan = dateOfLoan;
+        this.dateOfReturn = dateOfReturn;
+    }
+
+    public Loan() {
+    }
+
+    public long getLoanId() {
+        return loanId;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
+    public List<BookCopy> getCopiesLoaned() {
+        return copiesLoaned;
+    }
+
+    public void setCopiesLoaned(List<BookCopy> copiesLoaned) {
+        this.copiesLoaned = copiesLoaned;
+    }
+
+    public LocalDate getDateOfLoan() {
+        return dateOfLoan;
+    }
+
+    public void setDateOfLoan(LocalDate dateOfLoan) {
+        this.dateOfLoan = dateOfLoan;
+    }
+
+    public LocalDate getDateOfReturn() {
+        return dateOfReturn;
+    }
+
+    public void setDateOfReturn(LocalDate dateOfReturn) {
+        this.dateOfReturn = dateOfReturn;
     }
 }

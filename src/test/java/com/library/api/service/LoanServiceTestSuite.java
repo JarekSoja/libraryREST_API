@@ -80,8 +80,8 @@ public class LoanServiceTestSuite {
         //When
         loanService.returnLoan(loan);
         //Then
-        Assert.assertEquals(bookCopy1.isAvailable(), true);
-        Assert.assertEquals(bookCopy2.isAvailable(), true);
+        Assert.assertTrue(bookCopy1.isAvailable());
+        Assert.assertTrue(bookCopy2.isAvailable());
     }
 
     @Test
